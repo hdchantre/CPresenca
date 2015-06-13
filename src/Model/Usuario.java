@@ -13,6 +13,8 @@ public class Usuario {
 	private String senha;
 	private Boolean isAdmin;
 	private Date dataNascimento;
+	private Boolean isLogado;
+	private Integer chave;
 
 	public String getNome() {
 		return nome;
@@ -84,5 +86,21 @@ public class Usuario {
 
 	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
+	}
+	
+	public Boolean getIsLogado() {
+		return isLogado;
+	}
+
+	public void setIsLogado(Boolean isLogado) {
+		this.isLogado = isLogado;
+	}
+
+	public Integer getChave() {
+		return chave;
+	}
+
+	public void setChave(Integer chave) {
+		this.chave = chave;
 	}
 }

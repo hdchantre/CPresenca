@@ -1,7 +1,5 @@
 package View;
 
-import java.util.List;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -9,29 +7,38 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import Control.ControleLogin;
-import Control.ControleAula;
-import XML.TurmaLogin;
+import Model.Aluno;
+import Model.Professor;
+import Model.Usuario;
 import XML.UsuarioLogin;
 
 @Path("/login")
 public class LoginView {
 
 	ControleLogin controleLogin = new ControleLogin();
-	ControleAula controleAula = new ControleAula(); 
 
 	@GET
 	@Path("/usuario/{usuario}/senha/{senha}")
 	@Produces(MediaType.APPLICATION_XML)
-	public UsuarioLogin returnVersion(@PathParam("usuario") String nameUsuario,
+	public UsuarioLogin logar(@PathParam("usuario") String nameUsuario,
 			@PathParam("senha") String senha) {
-		return controleLogin.tentarLogar(nameUsuario, senha);
-	}
+		UsuarioLogin usuarioLogin = new UsuarioLogin();
+		usuarioLogin.setSucess(false);
 
-	@GET
-	@Path("turma/usuario/{usuario}/tipo/{tipo}")
-	@Produces(MediaType.APPLICATION_XML)
-	public List<TurmaLogin> getTurma(@PathParam("usuario") String nameUsuario, @PathParam("tipo") String tipo) {
-		return controleAula.getTurmas(nameUsuario, tipo);
-	}
+		Usuario usuario = new Usuario();
 
+		usuario = controleLogin.tentarLogar(nameUsuario, senha);
+
+		if (usuario instanceof Aluno) {
+			usuarioLogin.setSucess(true);
+			usuarioLogin.setTipo("Aluno");
+			usuarioLogin.setChave(usuario.getChave());
+		} else if (usuario instanceof Professor) {
+			usuarioLogin.setSucess(true);
+			usuarioLogin.setTipo("Professor");
+			usuarioLogin.setChave(usuario.getChave());
+		}
+
+		return usuarioLogin;
+	}
 }
