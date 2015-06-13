@@ -47,6 +47,20 @@ public class ControleAula {
 
 		return turmasLogin;
 	}
+	
+	
+	// Esse método deve computar as presenças e chamar o fechar aula
+	public boolean computarAula (Integer idTurma)
+	{
+		fecharAula();
+		return true;
+	}
 
+	//Na verdade esse método deve retornar o relatório de presença computada
+	//nao sei como isso deve ser feito ainda
+	public boolean fecharAula()
+	{
+		return true;
+	}
 
 }

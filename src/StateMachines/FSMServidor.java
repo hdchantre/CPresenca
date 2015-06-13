@@ -1,6 +1,8 @@
 package StateMachines;
 
 
+import javax.xml.ws.Action;
+
 import nz.ac.waikato.modeljunit.*;
 import nz.ac.waikato.modeljunit.coverage.*;
 

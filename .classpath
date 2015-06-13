@@ -14,5 +14,12 @@
 	<classpathentry kind="lib" path="D:/eclipse/eclipse_es/plugins/jersey-server.jar"/>
 	<classpathentry kind="lib" path="D:/eclipse/eclipse_es/plugins/jersey-media-jaxb.jar"/>
 	<classpathentry kind="lib" path="D:/eclipse/eclipse_es/plugins/jersey-container-servlet.jar"/>
+	<classpathentry kind="lib" path="D:/javax.annotation-api-1.2.jar"/>
+	<classpathentry kind="lib" path="D:/javax.inject-2.4.0-b10.jar"/>
+	<classpathentry kind="lib" path="D:/javax.servlet-api-3.0.1.jar"/>
+	<classpathentry kind="lib" path="D:/javax.ws.rs.jar"/>
+	<classpathentry kind="lib" path="D:/javax.ws.rs-api-2.0.1.jar"/>
+	<classpathentry kind="lib" path="D:/postgresql-9.4-1201.jdbc4.jar"/>
+	<classpathentry kind="lib" path="D:/Priscila/Dropbox/Engenharia de Software/testes/modeljunit-2.5-jar-with-dependencies.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
