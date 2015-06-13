@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="D:/eclipse/eclipse_es/plugins/modeljunit-2.0-beta1.jar"/>
+	<classpathentry kind="lib" path="D:/eclipse/eclipse_es/plugins/postgresql-8.4-703.jdbc3.jar"/>
+	<classpathentry kind="lib" path="D:/eclipse/eclipse_es/plugins/javax.ws.rs-api-2.0.1.jar"/>
+	<classpathentry kind="lib" path="D:/eclipse/eclipse_es/plugins/javax.servlet-api-3.0.1.jar"/>
+	<classpathentry kind="lib" path="D:/eclipse/eclipse_es/plugins/javax.annotation-api-1.2.jar"/>
+	<classpathentry kind="lib" path="D:/eclipse/eclipse_es/plugins/jersey-client.jar"/>
+	<classpathentry kind="lib" path="D:/eclipse/eclipse_es/plugins/jersey-common.jar"/>
+	<classpathentry kind="lib" path="D:/eclipse/eclipse_es/plugins/jersey-container-servlet-core.jar"/>
+	<classpathentry kind="lib" path="D:/eclipse/eclipse_es/plugins/jersey-server.jar"/>
+	<classpathentry kind="lib" path="D:/eclipse/eclipse_es/plugins/jersey-media-jaxb.jar"/>
+	<classpathentry kind="lib" path="D:/eclipse/eclipse_es/plugins/jersey-container-servlet.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
