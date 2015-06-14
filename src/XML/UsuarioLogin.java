@@ -8,6 +8,7 @@ public class UsuarioLogin {
 	
 	private Boolean sucess;
 	private String tipo;
+	private Integer chave;
 	
 	
 	@XmlElement(name = "tipo")
@@ -27,4 +28,13 @@ public class UsuarioLogin {
 	public void setSucess(Boolean sucess) {
 		this.sucess = sucess;
 	}
+	
+	@XmlElement(name = "chave")
+	public Integer getChave() {
+		return chave;
+	}
+
+	public void setChave(Integer chave) {
+		this.chave = chave;
+	
 }
