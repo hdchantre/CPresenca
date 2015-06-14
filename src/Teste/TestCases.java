@@ -61,7 +61,7 @@ public class TestCases {
 		Usuario usuario = controleLogin.tentarDeslogar("Joao", "Aluno", chave);
 			
 		  
-		if (usuario.getIsLogado())
+		if (!usuario.getIsLogado())
 		{
 			fsmservidor.efetuarLogout();
 			assertEquals(true,( fsmservidor.getState()== StateServer.inativo.toString()));
