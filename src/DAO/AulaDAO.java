@@ -5,19 +5,25 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import Model.Disciplina;
+import Model.Turma;
 import XML.InicializaChamada;
 
 public class AulaDAO {
 
 	MainDAO mainDAO = new MainDAO();
+	CommonDAO commonDAO = new CommonDAO();
+
 	Connection connection;
 
 	private static final String DB_VERIFICA_CHAMADA_ABERTA = "select * from chamada where turma = ? and fim_aula = false";
 	private static final String DB_INICIALIZA_CHAMADA = "insert into chamada (turma, data_chamada, hora_inicio, fim_aula) values (?,?,?,false)";
-	private static final String DB_VERIFICA_CHAMADA_ABERTA_PROFESSOR = "select c.fim_aula from chamada as c where c.turma in (select t.id from turma as t, usuario as u where t.professor = u.id and u.usuario = ?)";
-	private static final String DB_VARIFICA_CHAMADA_ABERTA_ALUNO = "select c.fim_aula from chamada as c where c.turma in (select t.id from turma_aluno as t, usuario as u where t.aluno = u.id and u.usuario = ?)";
+	private static final String DB_GET_TURMA_PROFESSOR = "SELECT t.id, t.disciplina, d.nome, c.fim_aula FROM turma as t, disciplina as d, chamada as c WHERE datafim > CURRENT_TIMESTAMP and professor = (select id from usuario where usuario = ?) and t.disciplina = d.id and c.turma = t.id";
+	private static final String DB_GET_TURMA_ALUNO = "SELECT t.id, t.disciplina, d.nome, c.fim_aula FROM turma as t, disciplina as d, turma_aluno as ta, chamada as c WHERE t.datafim > CURRENT_TIMESTAMP and ta.aluno = (select id from usuario where usuario = ?) and t.disciplina = d.id and ta.turma = t.id and c.turma = t.id";
 
 	public InicializaChamada inicializaChamada(Integer idTurma) {
 		InicializaChamada iChamada = new InicializaChamada();
@@ -66,61 +72,95 @@ public class AulaDAO {
 
 		return iChamada;
 	}
-	
-	public boolean verificaChamadaAbertaProfessor(String usuario) {
-		
-		boolean isAberta = false;
 
-		connection = mainDAO.conectarDB();
+	public List<Turma> getTurmasProfessor(String nomeUsuario, Integer chave) {
 
-		PreparedStatement ps;
-		try {
-			ps = connection.prepareStatement(DB_VERIFICA_CHAMADA_ABERTA_PROFESSOR);
+		List<Turma> turmas = new ArrayList<Turma>();
+		Turma turma;
+		Disciplina disciplina;
 
-			ps.setString(1, usuario);
+		String estado = commonDAO.isUsuarioLogado(nomeUsuario, chave);
 
-			ResultSet rs = ps.executeQuery();
+		if ("logado".equals(estado)) {
+			connection = mainDAO.conectarDB();
 
-			if (rs.next()) {
-				if(!rs.getBoolean("fim_aula")){
-					isAberta = true;
+			PreparedStatement ps;
+			try {
+				ps = connection.prepareStatement(DB_GET_TURMA_PROFESSOR);
+
+				ps.setString(1, nomeUsuario);
+
+				ResultSet rs = ps.executeQuery();
+
+				while (rs.next()) {
+					turma = new Turma();
+					disciplina = new Disciplina();
+
+					turma.setId(rs.getInt("id"));
+					turma.setChamadaAberta(rs.getBoolean("fim_aula"));
+					disciplina.setId(rs.getInt("disciplina"));
+					disciplina.setNome(rs.getString("nome"));
+
+					turma.setDisciplina(disciplina);
+
+					turmas.add(turma);
 				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		mainDAO.fecharConexaoDB();
 
-		return isAberta;
+			mainDAO.fecharConexaoDB();
+		} else {
+			return null;
+		}
+
+		return turmas;
 	}
-	
-	public boolean verificaChamadaAbertaAluno(String usuario) {
-		
-		boolean isAberta = false;
 
-		connection = mainDAO.conectarDB();
+	public List<Turma> getTurmasAluno(String nomeUsuario, Integer chave) {
 
-		PreparedStatement ps;
-		try {
-			ps = connection.prepareStatement(DB_VARIFICA_CHAMADA_ABERTA_ALUNO);
+		List<Turma> turmas = new ArrayList<Turma>();
+		Turma turma;
+		Disciplina disciplina;
 
-			ps.setString(1, usuario);
+		String estado = commonDAO.isUsuarioLogado(nomeUsuario, chave);
 
-			ResultSet rs = ps.executeQuery();
+		if ("logado".equals(estado)) {
+			connection = mainDAO.conectarDB();
 
-			if (rs.next()) {
-				if(!rs.getBoolean("fim_aula")){
-					isAberta = true;
+			PreparedStatement ps;
+			try {
+				ps = connection.prepareStatement(DB_GET_TURMA_ALUNO);
+
+				ps.setString(1, nomeUsuario);
+
+				ResultSet rs = ps.executeQuery();
+
+				while (rs.next()) {
+					turma = new Turma();
+					disciplina = new Disciplina();
+
+					turma.setId(rs.getInt("id"));
+					turma.setChamadaAberta(rs.getBoolean("fim_aula"));
+					disciplina.setId(rs.getInt("disciplina"));
+					disciplina.setNome(rs.getString("nome"));
+
+					turma.setDisciplina(disciplina);
+
+					turmas.add(turma);
 				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		mainDAO.fecharConexaoDB();
 
-		return isAberta;
+			mainDAO.fecharConexaoDB();
+		} else {
+			return null;
+		}
+
+		return turmas;
 	}
 
 }

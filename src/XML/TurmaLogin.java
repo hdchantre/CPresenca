@@ -9,6 +9,7 @@ public class TurmaLogin {
 	private Integer idTurma;
 	private String nomeDisciplina;
 	private Boolean chamadaAberta;
+	private String erro;
 	
 	@XmlElement(name = "nomeDisciplina")
 	public String getNomeDisciplina() {
@@ -35,6 +36,15 @@ public class TurmaLogin {
 
 	public void setChamadaAberta(Boolean chamadaAberta) {
 		this.chamadaAberta = chamadaAberta;
+	}
+	
+	@XmlElement(name = "tipoErro")
+	public String getErro() {
+		return erro;
+	}
+
+	public void setErro(String erro) {
+		this.erro = erro;
 	}
 
 }

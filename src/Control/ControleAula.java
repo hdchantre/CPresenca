@@ -19,33 +19,16 @@ public class ControleAula {
 	}
 	
 	
-	public List<TurmaLogin> getTurmas(String nomeUsuario, String tipo) {
-		List<TurmaLogin> turmasLogin = new ArrayList<TurmaLogin>();
-		TurmaLogin turmaLogin;
+	public List<Turma> getTurmas(String nomeUsuario, String tipo, Integer chave) {
+		List<Turma> turmas = new ArrayList<Turma>();
 
 		if (tipo.equals("Aluno")) {
-			List<Turma> turmas = loginDAO.getTurmasAluno(nomeUsuario);
-
-			for (Turma turma : turmas) {
-				turmaLogin = new TurmaLogin();
-				turmaLogin.setIdTurma(turma.getId());
-				turmaLogin.setNomeDisciplina(turma.getDisciplina().getNome());
-				turmaLogin.setChamadaAberta(turma.getChamadaAberta());
-				turmasLogin.add(turmaLogin);
-			}
+			turmas = aulaDAO.getTurmasAluno(nomeUsuario, chave);
 		} else if (tipo.equals("Professor")) {
-			List<Turma> turmas = loginDAO.getTurmasProfessor(nomeUsuario);
-
-			for (Turma turma : turmas) {
-				turmaLogin = new TurmaLogin();
-				turmaLogin.setIdTurma(turma.getId());
-				turmaLogin.setNomeDisciplina(turma.getDisciplina().getNome());
-				turmaLogin.setChamadaAberta(turma.getChamadaAberta());
-				turmasLogin.add(turmaLogin);
-			}
+			turmas = aulaDAO.getTurmasProfessor(nomeUsuario, chave);
 		}
 
-		return turmasLogin;
+		return turmas;
 	}
 	
 	
