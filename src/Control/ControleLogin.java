@@ -17,4 +17,11 @@ public class ControleLogin {
 
 		return usuario;
 	}
+	
+	public Usuario tentarDeslogar(String nomeUsuario, String tipo, Integer chave) {
+
+		Usuario usuario = loginDAO.tentarDeslogar(nomeUsuario, tipo, chave);
+		
+		return usuario;
+	}
 }

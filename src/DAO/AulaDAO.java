@@ -16,6 +16,8 @@ public class AulaDAO {
 
 	private static final String DB_VERIFICA_CHAMADA_ABERTA = "select * from chamada where turma = ? and fim_aula = false";
 	private static final String DB_INICIALIZA_CHAMADA = "insert into chamada (turma, data_chamada, hora_inicio, fim_aula) values (?,?,?,false)";
+	private static final String DB_VERIFICA_CHAMADA_ABERTA_PROFESSOR = "select c.fim_aula from chamada as c where c.turma in (select t.id from turma as t, usuario as u where t.professor = u.id and u.usuario = ?)";
+	private static final String DB_VARIFICA_CHAMADA_ABERTA_ALUNO = "select c.fim_aula from chamada as c where c.turma in (select t.id from turma_aluno as t, usuario as u where t.aluno = u.id and u.usuario = ?)";
 
 	public InicializaChamada inicializaChamada(Integer idTurma) {
 		InicializaChamada iChamada = new InicializaChamada();
@@ -63,6 +65,62 @@ public class AulaDAO {
 		mainDAO.fecharConexaoDB();
 
 		return iChamada;
+	}
+	
+	public boolean verificaChamadaAbertaProfessor(String usuario) {
+		
+		boolean isAberta = false;
+
+		connection = mainDAO.conectarDB();
+
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(DB_VERIFICA_CHAMADA_ABERTA_PROFESSOR);
+
+			ps.setString(1, usuario);
+
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+				if(!rs.getBoolean("fim_aula")){
+					isAberta = true;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		mainDAO.fecharConexaoDB();
+
+		return isAberta;
+	}
+	
+	public boolean verificaChamadaAbertaAluno(String usuario) {
+		
+		boolean isAberta = false;
+
+		connection = mainDAO.conectarDB();
+
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(DB_VARIFICA_CHAMADA_ABERTA_ALUNO);
+
+			ps.setString(1, usuario);
+
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+				if(!rs.getBoolean("fim_aula")){
+					isAberta = true;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		mainDAO.fecharConexaoDB();
+
+		return isAberta;
 	}
 
 }

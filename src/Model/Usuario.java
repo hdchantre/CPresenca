@@ -15,6 +15,7 @@ public class Usuario {
 	private Date dataNascimento;
 	private Boolean isLogado;
 	private Integer chave;
+	private Boolean inAula;
 
 	public String getNome() {
 		return nome;
@@ -102,5 +103,13 @@ public class Usuario {
 
 	public void setChave(Integer chave) {
 		this.chave = chave;
+	}
+	
+	public Boolean getInAula() {
+		return inAula;
+	}
+
+	public void setInAula(Boolean inAula) {
+		this.inAula = inAula;
 	}
 }
