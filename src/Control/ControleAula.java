@@ -5,6 +5,7 @@ import java.util.List;
 
 import DAO.AulaDAO;
 import DAO.LoginDAO;
+import Model.Chamada;
 import Model.Turma;
 import XML.InicializaChamada;
 import XML.TurmaLogin;
@@ -14,8 +15,9 @@ public class ControleAula {
 	AulaDAO aulaDAO = new AulaDAO();
 	LoginDAO loginDAO = new LoginDAO();
 
-	public InicializaChamada inicializaChamada(Integer idTurma) {
-		return aulaDAO.inicializaChamada(idTurma);
+	public Chamada inicializaChamada(String nomeUsuario, Integer idTurma,
+			Integer chave) {
+		return aulaDAO.inicializaChamada(nomeUsuario, idTurma, chave);
 	}
 	
 	
