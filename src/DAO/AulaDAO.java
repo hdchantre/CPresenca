@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import Model.Chamada;
 import Model.Disciplina;
 import Model.Turma;
 import XML.InicializaChamada;
@@ -25,52 +26,52 @@ public class AulaDAO {
 	private static final String DB_GET_TURMA_PROFESSOR = "SELECT t.id, t.disciplina, d.nome, c.fim_aula FROM turma as t, disciplina as d, chamada as c WHERE datafim > CURRENT_TIMESTAMP and professor = (select id from usuario where usuario = ?) and t.disciplina = d.id and c.turma = t.id";
 	private static final String DB_GET_TURMA_ALUNO = "SELECT t.id, t.disciplina, d.nome, c.fim_aula FROM turma as t, disciplina as d, turma_aluno as ta, chamada as c WHERE t.datafim > CURRENT_TIMESTAMP and ta.aluno = (select id from usuario where usuario = ?) and t.disciplina = d.id and ta.turma = t.id and c.turma = t.id";
 
-	public InicializaChamada inicializaChamada(Integer idTurma) {
-		InicializaChamada iChamada = new InicializaChamada();
+	public Chamada inicializaChamada(String nomeUsuario, Integer idTurma,
+			Integer chave) {
+		Chamada chamada = new Chamada();
+		chamada.setChamadaAberta(false);
 
-		iChamada.setInicializada(false);
+		String estado = commonDAO.isUsuarioLogado(nomeUsuario, chave);
 
-		connection = mainDAO.conectarDB();
+		if ("logado".equals(estado)) {
+			connection = mainDAO.conectarDB();
 
-		PreparedStatement ps;
-		try {
-			ps = connection.prepareStatement(DB_VERIFICA_CHAMADA_ABERTA);
+			PreparedStatement ps;
+			try {
+				ps = connection.prepareStatement(DB_VERIFICA_CHAMADA_ABERTA);
 
-			ps.setInt(1, idTurma);
+				ps.setInt(1, idTurma);
 
-			ResultSet rs = ps.executeQuery();
+				ResultSet rs = ps.executeQuery();
 
-			if (rs.next()) {
-				iChamada.setCausaDoProblema("Chamada em aberto");
-				mainDAO.fecharConexaoDB();
-				return iChamada;
+				if (rs.next()) {
+					mainDAO.fecharConexaoDB();
+					return null;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+
+			try {
+				ps = connection.prepareStatement(DB_INICIALIZA_CHAMADA);
+
+				java.sql.Date data = new java.sql.Date((new Date()).getTime());
+
+				ps.setInt(1, idTurma);
+				ps.setDate(2, data);
+				ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+
+				if (ps.executeUpdate() > 0) {
+					chamada.setChamadaAberta(true);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			mainDAO.fecharConexaoDB();
 		}
 
-		try {
-			ps = connection.prepareStatement(DB_INICIALIZA_CHAMADA);
-
-			java.sql.Date data = new java.sql.Date((new Date()).getTime());
-
-			ps.setInt(1, idTurma);
-			ps.setDate(2, data);
-			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
-
-			int i = ps.executeUpdate();
-
-			if (i > 0) {
-				iChamada.setInicializada(true);
-			}
-		} catch (SQLException e) {
-			iChamada.setCausaDoProblema("Problema no banco");
-			e.printStackTrace();
-		}
-
-		mainDAO.fecharConexaoDB();
-
-		return iChamada;
+		return chamada;
 	}
 
 	public List<Turma> getTurmasProfessor(String nomeUsuario, Integer chave) {

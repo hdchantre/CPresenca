@@ -10,6 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import Control.ControleAula;
+import Model.Chamada;
 import Model.Turma;
 import XML.InicializaChamada;
 import XML.TurmaLogin;
@@ -20,10 +21,28 @@ public class AulaView {
 	ControleAula controleAula = new ControleAula();
 
 	@GET
-	@Path("/turmaId/{id}")
+	@Path("/usuario/{usuario}/turmaId/{id}/chave/{chave}")
 	@Produces(MediaType.APPLICATION_XML)
-	public InicializaChamada returnVersion(@PathParam("id") Integer idTurma) {
-		return controleAula.inicializaChamada(idTurma);
+	public InicializaChamada inicializaChamada(
+			@PathParam("usuario") String nameUsuario,
+			@PathParam("id") Integer idTurma, @PathParam("chave") Integer chave) {
+
+		InicializaChamada iChamada = new InicializaChamada();
+
+		Chamada chamada = controleAula.inicializaChamada(nameUsuario, idTurma,
+				chave);
+
+		if (chamada == null) {
+			iChamada.setInicializada(false);
+			iChamada.setCausaDoProblema("Chamada ja aberta");
+		} else if (chamada.getChamadaAberta()) {
+			iChamada.setInicializada(true);
+		} else {
+			iChamada.setInicializada(false);
+			iChamada.setCausaDoProblema("Chave errada");
+		}
+
+		return iChamada;
 	}
 	
 	@GET
