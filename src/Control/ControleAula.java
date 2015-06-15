@@ -18,6 +18,10 @@ public class ControleAula {
 	public Chamada inicializaChamada(String nomeUsuario, Integer idTurma) {
 		return aulaDAO.inicializaChamada(nomeUsuario, idTurma);
 	}
+	
+	public Chamada fecharAula(Integer idTurma) {
+		return aulaDAO.finalizaChamada(idTurma);
+	}
 
 	public List<Turma> getTurmas(String nomeUsuario, String tipo) {
 		List<Turma> turmas = new ArrayList<Turma>();

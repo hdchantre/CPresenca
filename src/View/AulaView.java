@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import Control.ControleAula;
 import Model.Chamada;
 import Model.Turma;
+import XML.FinalizaChamada;
 import XML.InicializaChamada;
 import XML.TurmaLogin;
 
@@ -71,6 +72,25 @@ public class AulaView {
 		}
 
 		return turmasLogin;
+	}
+	
+	@GET
+	@Path("/turmaId/{id}")
+	@Produces(MediaType.APPLICATION_XML)
+	public FinalizaChamada fecharChamada(@PathParam("id") Integer idTurma) {
+
+		FinalizaChamada fChamada = new FinalizaChamada();
+
+		Chamada chamada = controleAula.fecharAula(idTurma);
+
+		if (chamada.getChamadaAberta()) {
+			fChamada.setFinalizada(true);
+			fChamada.setCausaDoProblema("Chamada continua aberta");
+		} else {
+			fChamada.setFinalizada(false);
+		}
+
+		return fChamada;
 	}
 
 }
