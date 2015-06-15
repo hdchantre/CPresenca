@@ -11,13 +11,13 @@ public class CommonDAO {
 
 	Connection connection;
 
-	private static final String DB_VERIFICA_USUARIO_LOGADO = "select islogado from usuario where usuario=? and chave=?";
+	private static final String DB_VERIFICA_USUARIO_LOGADO = "select islogado from usuario where usuario=?";
 	private static final String DB_VERIFICA_CHAMADA_ABERTA_PROFESSOR = "select c.fim_aula from chamada as c where c.turma in (select t.id from turma as t, usuario as u where t.professor = u.id and u.usuario = ?)";
 	private static final String DB_VARIFICA_CHAMADA_ABERTA_ALUNO = "select c.fim_aula from chamada as c where c.turma in (select t.id from turma_aluno as t, usuario as u where t.aluno = u.id and u.usuario = ?)";
 
-	public String isUsuarioLogado(String nomeUsuario, Integer chave) {
+	public String isUsuarioLogado(String nomeUsuario) {
 
-		String estado = "Chave Errada";
+		String estado = "Usuario Errado";
 		PreparedStatement ps;
 
 		connection = mainDAO.conectarDB();
@@ -27,7 +27,6 @@ public class CommonDAO {
 			ps = connection.prepareStatement(DB_VERIFICA_USUARIO_LOGADO);
 
 			ps.setString(1, nomeUsuario);
-			ps.setInt(2, chave);
 
 			ResultSet rs = ps.executeQuery();
 

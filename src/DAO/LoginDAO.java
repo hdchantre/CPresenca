@@ -18,11 +18,12 @@ public class LoginDAO {
 
 	private static final String DB_SELECT_USUARIO = "select nome, tipo, islogado from usuario where usuario=? and senha=?";
 	private static final String DB_UPDATE_USUARIO_LOGADO = "update usuario set islogado = true, chave = ? where usuario=? and senha=?";
-	private static final String DB_SAIR = "update usuario set islogado = false, chave = null  where usuario=? and chave=?";
+	private static final String DB_SAIR = "update usuario set islogado = false, chave = null  where usuario=?";
 
 	public Usuario tentarLogar(String nomeUsuario, String senha) {
 
 		Usuario usuario = new Usuario();
+		usuario.setIsLogado(false);
 
 		connection = mainDAO.conectarDB();
 
@@ -72,14 +73,14 @@ public class LoginDAO {
 		return usuario;
 	}
 
-	public Usuario tentarDeslogar(String nomeUsuario, String tipo, Integer chave) {
+	public Usuario tentarDeslogar(String nomeUsuario, String tipo) {
 
 		Usuario usuario = new Usuario();
 
 		usuario.setIsLogado(false);
 		usuario.setInAula(false);
 
-		String estado = commonDAO.isUsuarioLogado(nomeUsuario, chave);
+		String estado = commonDAO.isUsuarioLogado(nomeUsuario);
 
 		if ("logado".equals(estado)) {
 
@@ -94,7 +95,6 @@ public class LoginDAO {
 						ps = connection.prepareStatement(DB_SAIR);
 
 						ps.setString(1, nomeUsuario);
-						ps.setInt(2, chave);
 
 						if (ps.executeUpdate() <= 0) {
 							usuario.setIsLogado(true);
@@ -109,7 +109,6 @@ public class LoginDAO {
 						ps = connection.prepareStatement(DB_SAIR);
 
 						ps.setString(1, nomeUsuario);
-						ps.setInt(2, chave);
 
 						if (ps.executeUpdate() <= 0) {
 							usuario.setIsLogado(true);
@@ -126,7 +125,7 @@ public class LoginDAO {
 			}
 
 			mainDAO.fecharConexaoDB();
-		} else if ("Chave Errada".equals(estado)) {
+		} else if ("Usuario Errado".equals(estado)) {
 			return null;
 		}
 

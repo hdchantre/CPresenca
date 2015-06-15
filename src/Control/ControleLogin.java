@@ -1,6 +1,5 @@
 package Control;
 
-
 import DAO.LoginDAO;
 import Model.Aluno;
 import Model.Professor;
@@ -17,11 +16,11 @@ public class ControleLogin {
 
 		return usuario;
 	}
-	
-	public Usuario tentarDeslogar(String nomeUsuario, String tipo, Integer chave) {
 
-		Usuario usuario = loginDAO.tentarDeslogar(nomeUsuario, tipo, chave);
-		
+	public Usuario tentarDeslogar(String nomeUsuario, String tipo) {
+
+		Usuario usuario = loginDAO.tentarDeslogar(nomeUsuario, tipo);
+
 		return usuario;
 	}
 }

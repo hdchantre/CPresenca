@@ -11,40 +11,35 @@ import XML.InicializaChamada;
 import XML.TurmaLogin;
 
 public class ControleAula {
-	
+
 	AulaDAO aulaDAO = new AulaDAO();
 	LoginDAO loginDAO = new LoginDAO();
 
-	public Chamada inicializaChamada(String nomeUsuario, Integer idTurma,
-			Integer chave) {
-		return aulaDAO.inicializaChamada(nomeUsuario, idTurma, chave);
+	public Chamada inicializaChamada(String nomeUsuario, Integer idTurma) {
+		return aulaDAO.inicializaChamada(nomeUsuario, idTurma);
 	}
-	
-	
-	public List<Turma> getTurmas(String nomeUsuario, String tipo, Integer chave) {
+
+	public List<Turma> getTurmas(String nomeUsuario, String tipo) {
 		List<Turma> turmas = new ArrayList<Turma>();
 
 		if (tipo.equals("Aluno")) {
-			turmas = aulaDAO.getTurmasAluno(nomeUsuario, chave);
+			turmas = aulaDAO.getTurmasAluno(nomeUsuario);
 		} else if (tipo.equals("Professor")) {
-			turmas = aulaDAO.getTurmasProfessor(nomeUsuario, chave);
+			turmas = aulaDAO.getTurmasProfessor(nomeUsuario);
 		}
 
 		return turmas;
 	}
-	
-	
+
 	// Esse método deve computar as presenças e chamar o fechar aula
-	public boolean computarAula (Integer idTurma)
-	{
+	public boolean computarAula(Integer idTurma) {
 		fecharAula();
 		return true;
 	}
 
-	//Na verdade esse método deve retornar o relatório de presença computada
-	//nao sei como isso deve ser feito ainda
-	public boolean fecharAula()
-	{
+	// Na verdade esse método deve retornar o relatório de presença computada
+	// nao sei como isso deve ser feito ainda
+	public boolean fecharAula() {
 		return true;
 	}
 

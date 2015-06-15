@@ -43,20 +43,20 @@ public class LoginView {
 	}
 	
 	@GET
-	@Path("/usuario/{usuario}/tipo/{tipo}/chave/{chave}")
+	@Path("/usuario/{usuario}/tipo/{tipo}")
 	@Produces(MediaType.APPLICATION_XML)
 	public UsuarioLogin deslogar(@PathParam("usuario") String nameUsuario,
-			@PathParam("tipo") String tipo, @PathParam("chave") Integer chave) {
+			@PathParam("tipo") String tipo) {
 		
 		UsuarioLogin usuarioLogin = new UsuarioLogin();
 		usuarioLogin.setSucess(false);
 
 		Usuario usuario = new Usuario();
 
-		usuario = controleLogin.tentarDeslogar(nameUsuario, tipo, chave);
+		usuario = controleLogin.tentarDeslogar(nameUsuario, tipo);
 
 		if(usuario==null){
-			usuarioLogin.setTipo("Chave errada");
+			usuarioLogin.setTipo("Usuario errado");
 		}else if(!usuario.getIsLogado()){
 			usuarioLogin.setSucess(true);
 		}else if(usuario.getInAula()){

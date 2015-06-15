@@ -21,16 +21,15 @@ public class AulaView {
 	ControleAula controleAula = new ControleAula();
 
 	@GET
-	@Path("/usuario/{usuario}/turmaId/{id}/chave/{chave}")
+	@Path("/usuario/{usuario}/turmaId/{id}")
 	@Produces(MediaType.APPLICATION_XML)
 	public InicializaChamada inicializaChamada(
 			@PathParam("usuario") String nameUsuario,
-			@PathParam("id") Integer idTurma, @PathParam("chave") Integer chave) {
+			@PathParam("id") Integer idTurma) {
 
 		InicializaChamada iChamada = new InicializaChamada();
 
-		Chamada chamada = controleAula.inicializaChamada(nameUsuario, idTurma,
-				chave);
+		Chamada chamada = controleAula.inicializaChamada(nameUsuario, idTurma);
 
 		if (chamada == null) {
 			iChamada.setInicializada(false);
@@ -39,26 +38,26 @@ public class AulaView {
 			iChamada.setInicializada(true);
 		} else {
 			iChamada.setInicializada(false);
-			iChamada.setCausaDoProblema("Chave errada");
+			iChamada.setCausaDoProblema("Usuario errado");
 		}
 
 		return iChamada;
 	}
-	
+
 	@GET
-	@Path("/usuario/{usuario}/tipo/{tipo}/chave/{chave}")
+	@Path("/usuario/{usuario}/tipo/{tipo}")
 	@Produces(MediaType.APPLICATION_XML)
 	public List<TurmaLogin> getTurma(@PathParam("usuario") String nameUsuario,
-			@PathParam("tipo") String tipo, @PathParam("chave") Integer chave) {
+			@PathParam("tipo") String tipo) {
 
 		List<TurmaLogin> turmasLogin = new ArrayList<TurmaLogin>();
 		TurmaLogin turmaLogin;
 
-		List<Turma> turmas = controleAula.getTurmas(nameUsuario, tipo, chave);
+		List<Turma> turmas = controleAula.getTurmas(nameUsuario, tipo);
 
 		if (turmas == null) {
 			turmaLogin = new TurmaLogin();
-			turmaLogin.setErro("Chave errada");
+			turmaLogin.setErro("Usuario errado");
 			turmasLogin.add(turmaLogin);
 			return turmasLogin;
 		}

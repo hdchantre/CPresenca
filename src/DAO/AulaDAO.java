@@ -26,12 +26,11 @@ public class AulaDAO {
 	private static final String DB_GET_TURMA_PROFESSOR = "SELECT t.id, t.disciplina, d.nome, c.fim_aula FROM turma as t, disciplina as d, chamada as c WHERE datafim > CURRENT_TIMESTAMP and professor = (select id from usuario where usuario = ?) and t.disciplina = d.id and c.turma = t.id";
 	private static final String DB_GET_TURMA_ALUNO = "SELECT t.id, t.disciplina, d.nome, c.fim_aula FROM turma as t, disciplina as d, turma_aluno as ta, chamada as c WHERE t.datafim > CURRENT_TIMESTAMP and ta.aluno = (select id from usuario where usuario = ?) and t.disciplina = d.id and ta.turma = t.id and c.turma = t.id";
 
-	public Chamada inicializaChamada(String nomeUsuario, Integer idTurma,
-			Integer chave) {
+	public Chamada inicializaChamada(String nomeUsuario, Integer idTurma) {
 		Chamada chamada = new Chamada();
 		chamada.setChamadaAberta(false);
 
-		String estado = commonDAO.isUsuarioLogado(nomeUsuario, chave);
+		String estado = commonDAO.isUsuarioLogado(nomeUsuario);
 
 		if ("logado".equals(estado)) {
 			connection = mainDAO.conectarDB();
@@ -74,13 +73,13 @@ public class AulaDAO {
 		return chamada;
 	}
 
-	public List<Turma> getTurmasProfessor(String nomeUsuario, Integer chave) {
+	public List<Turma> getTurmasProfessor(String nomeUsuario) {
 
 		List<Turma> turmas = new ArrayList<Turma>();
 		Turma turma;
 		Disciplina disciplina;
 
-		String estado = commonDAO.isUsuarioLogado(nomeUsuario, chave);
+		String estado = commonDAO.isUsuarioLogado(nomeUsuario);
 
 		if ("logado".equals(estado)) {
 			connection = mainDAO.conectarDB();
@@ -119,13 +118,13 @@ public class AulaDAO {
 		return turmas;
 	}
 
-	public List<Turma> getTurmasAluno(String nomeUsuario, Integer chave) {
+	public List<Turma> getTurmasAluno(String nomeUsuario) {
 
 		List<Turma> turmas = new ArrayList<Turma>();
 		Turma turma;
 		Disciplina disciplina;
 
-		String estado = commonDAO.isUsuarioLogado(nomeUsuario, chave);
+		String estado = commonDAO.isUsuarioLogado(nomeUsuario);
 
 		if ("logado".equals(estado)) {
 			connection = mainDAO.conectarDB();
