@@ -5,16 +5,19 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
+
 import Control.ControleAula;
 import Control.ControleLogin; //import Control.ControleTurma;
 import StateMachines.FSMServidor;
 import StateMachines.StateServer;
+import Model.Chamada;
 import Model.Usuario;
 
 /**
  * @author Hernani Chantre
  * 
  */
+
 public class TestCases {
 
 	private ControleLogin controleLogin;
@@ -35,7 +38,7 @@ public class TestCases {
 	@Test
 	public void logarValido() {
 		fsmservidor.getState();
-		Usuario usuario = controleLogin.tentarLogar("Joao", "12345");
+		Usuario usuario = controleLogin.tentarLogar("Eliane", "12345");
 
 		if (usuario.getIsLogado()) {
 			fsmservidor.loginServidor();
@@ -52,7 +55,7 @@ public class TestCases {
 	public void deslogarValido() {
 
 		fsmservidor.setState("logado");
-		Usuario usuario = controleLogin.tentarDeslogar("Joao", "Aluno");
+		Usuario usuario = controleLogin.tentarDeslogar("Eliane", "Professor");
 
 		if (!usuario.getIsLogado()) {
 			fsmservidor.efetuarLogout();
@@ -199,28 +202,46 @@ public class TestCases {
 	//		
 	// }
 
-	// Nao deve passar, pois o João é aluno e não professor
-	// @Test
-	// public void abrirSessaoDaAulaAluno() {
-	//					
-	// fsmservidor.loginServidor();
-	//
-	// if (controleLogin.tentarLogar("Joao", "12345").getTipo() == "Professor")
-	// {
-	//			
-	// if ((Object)controleAula.inicializaChamada(1)!= "NULL" )
-	// {
-	// fsmservidor.entrarEmAula();
-	// assertEquals(true,( fsmservidor.getState()==
-	// StateServer.emAula.toString()));
-	//			
-	// } else assertEquals(true,( fsmservidor.getState()==
-	// StateServer.emAula.toString()));
-	// } else assertEquals(true,( fsmservidor.getState()==
-	// StateServer.emAula.toString()));
-	//			
-	//		
-	// }
+	
+	@Test
+	public void abrirSessaoDaAula() {
+			
+	
+		fsmservidor.loginServidor();
+		
+		Chamada chamadaTeste = controleAula.inicializaChamada("Eliane", 1);
+		
+				
+		if (chamadaTeste.getChamadaAberta())
+		{
+			fsmservidor.entrarEmAula();
+			assertEquals(true,( fsmservidor.getState()== StateServer.emAula.toString()));
+		
+		} else assertEquals(true,( fsmservidor.getState()== StateServer.emAula.toString()));
+		
+		
+	}
+	
+	
+		
+	
+	@Test
+	public void abrirSessaoJaAberta() {
+			
+	
+		fsmservidor.entrarEmAula();
+		
+		Chamada chamadaTeste = controleAula.inicializaChamada("Eliane", 1);
+			
+		if (chamadaTeste == null)
+		{
+			fsmservidor.entrarEmAula();
+			assertEquals(true,( fsmservidor.getState()== StateServer.emAula.toString()));
+		
+		} else assertEquals(true,( fsmservidor.getState()== StateServer.emAula.toString()));
+		
+		
+	}
 
 	// Basta estar em aula para que a secao seja fechada
 	// Se houver como testar se é a professora que esta tentando fechar a aula
