@@ -1,9 +1,12 @@
 package Teste;
-
+//import org.junit.FixMethodOrder;
 import static org.junit.Assert.assertEquals;
+//import org.junit.runners.MethodSorters;
 
 import org.junit.Before;
 import org.junit.Test;
+
+
 
 
 import Control.ControleAula;
@@ -13,11 +16,12 @@ import StateMachines.StateServer;
 import Model.Chamada;
 import Model.Usuario;
 
+
 /**
  * @author Hernani Chantre
  * 
  */
-
+//@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestCases {
 
 	private ControleLogin controleLogin;
@@ -36,7 +40,7 @@ public class TestCases {
 	}
 
 	@Test
-	public void logarValido() {
+	public void a_logarValido() {
 		fsmservidor.getState();
 		Usuario usuario = controleLogin.tentarLogar("Eliane", "12345");
 
@@ -52,7 +56,7 @@ public class TestCases {
 	}
 
 	@Test
-	public void deslogarValido() {
+	public void g_deslogarValido() {
 
 		fsmservidor.setState("logado");
 		Usuario usuario = controleLogin.tentarDeslogar("Eliane", "Professor");
@@ -69,7 +73,7 @@ public class TestCases {
 	}
 
 	@Test
-	public void logarInvalido() {
+	public void c_logarInvalido() {
 
 		fsmservidor.loginInvalido();
 		Usuario usuario = controleLogin.tentarLogar("Joaos", "123453");
@@ -86,7 +90,7 @@ public class TestCases {
 	}
 
 	@Test
-	public void senhaInvalida() {
+	public void d_senhaInvalida() {
 
 		fsmservidor.loginInvalido();
 		Usuario usuario = controleLogin.tentarLogar("Joao", "123453");
@@ -103,7 +107,7 @@ public class TestCases {
 	}
 
 	@Test
-	public void senha_ID_Invalida() {
+	public void e_senha_ID_Invalida() {
 
 		fsmservidor.loginInvalido();
 		Usuario usuario = controleLogin.tentarLogar("Joaos", "123453");
@@ -204,12 +208,13 @@ public class TestCases {
 
 	
 	@Test
-	public void abrirSessaoDaAula() {
+	public void f_abrirSessaoDaAula() {
 			
 	
-		fsmservidor.loginServidor();
+		fsmservidor.setState("logado");
 		
 		Chamada chamadaTeste = controleAula.inicializaChamada("Eliane", 1);
+		//System.out.println("chamadaTeste"+ chamadaTeste);
 		
 				
 		if (chamadaTeste.getChamadaAberta())
@@ -226,7 +231,7 @@ public class TestCases {
 		
 	
 	@Test
-	public void abrirSessaoJaAberta() {
+	public void e_abrirSessaoJaAberta() {
 			
 	
 		fsmservidor.entrarEmAula();
