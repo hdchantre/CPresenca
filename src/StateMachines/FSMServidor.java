@@ -1,7 +1,6 @@
 package StateMachines;
 
 
-import javax.xml.ws.Action;
 
 import nz.ac.waikato.modeljunit.*;
 import nz.ac.waikato.modeljunit.coverage.*;
@@ -44,7 +43,7 @@ public class FSMServidor implements FsmModel {
 	// "Após logar o aluno estra passa pro estado logado"
 	public @Action
 	void loginServidor() {
-		System.out.println("loginAluno: " + state + " --> "
+		System.out.println("loginServidor: " + state + " --> "
 				+ StateServer.logado.toString());
 		state = StateServer.logado.toString();
 	}
@@ -76,7 +75,7 @@ public class FSMServidor implements FsmModel {
 	public @Action
 	void efetuarLogout() {
 		System.out.println("efetuarLogout: " + state + " --> "
-				+ StateServer.logado.toString());
+				+ StateServer.inativo.toString());
 		state = StateServer.inativo.toString();
 	}
 	

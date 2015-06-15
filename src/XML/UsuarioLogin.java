@@ -38,3 +38,4 @@ public class UsuarioLogin {
 		this.chave = chave;
 	
 }
+}
