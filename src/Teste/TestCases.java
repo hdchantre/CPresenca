@@ -12,7 +12,7 @@ import StateMachines.StateServer;
 import Model.Usuario;
 
 /**
- * @author Linka
+ * @author Hernani Chantre
  * 
  */
 public class TestCases {

@@ -129,20 +129,20 @@ public class FSMServidor implements FsmModel {
 
 	}
 
-	public boolean computarAulaGuard() {
+	public boolean faillogoutAulaGuard() {
 		return state.equals(StateServer.emAula.toString());
 	}
 
 	public @Action
-	void computarAula() {
-		System.out.println("computarAula: " + state + " --> "
-				+ StateServer.computandoAula.toString());
-		state = StateServer.computandoAula.toString();
+	void faillogoutAula() {
+		System.out.println("faillogoutAula: " + state + " --> "
+				+ StateServer.emAula.toString());
+		state = StateServer.emAula.toString();
 
 	}
 	
 	
-	public boolean encerrarAulaGuard() {
+	/*public boolean encerrarAulaGuard() {
 		return state.equals(StateServer.computandoAula.toString());
 	}
 
@@ -152,7 +152,7 @@ public class FSMServidor implements FsmModel {
 				+ StateServer.logado.toString());
 		state = StateServer.logado.toString();
 
-	}
+	}*/
 	
 	
 
