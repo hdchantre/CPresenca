@@ -4,9 +4,8 @@ import static org.junit.Assert.assertEquals;
 //import org.junit.runners.MethodSorters;
 
 import org.junit.Before;
+
 import org.junit.Test;
-
-
 
 
 import Control.ControleAula;
@@ -39,6 +38,7 @@ public class TestCases {
 		usuario = new Usuario();
 	}
 
+	
 	@Test
 	public void a_logarValido() {
 		fsmservidor.getState();
@@ -54,6 +54,7 @@ public class TestCases {
 					.toString()));
 
 	}
+
 
 	@Test
 	public void g_deslogarValido() {
@@ -234,7 +235,7 @@ public class TestCases {
 	public void e_abrirSessaoJaAberta() {
 			
 	
-		fsmservidor.entrarEmAula();
+		fsmservidor.setState("logado");
 		
 		Chamada chamadaTeste = controleAula.inicializaChamada("Eliane", 1);
 			
@@ -300,29 +301,19 @@ public class TestCases {
 	// }
 	//	
 	//
-	// @Test
-	// public void fecharSecaoAula() {
-	//					
-	// fsmservidor.computarAula();//está certo isso?
-	//
-	// if (fsmservidor.getState() == StateServer.computandoAula.toString())
-	// {
-	//			
-	// if (controleAula.fecharAula())
-	// {
-	// //Depois que estiver gerando os relatorios aqui deve ser testado se o
-	// relatorio
-	// //foi gerado corretamente
-	// fsmservidor.encerrarAula();
-	//			 
-	// assertEquals(true,( fsmservidor.getState()==
-	// StateServer.logado.toString()));
-	//			
-	// } else assertEquals(true,( fsmservidor.getState()==
-	// StateServer.computandoAula.toString()));
-	// } else assertEquals(true,( fsmservidor.getState()==
-	// StateServer.computandoAula.toString()));
-	//				
-	// }
+	
+	/*@Test
+	public void fecharSecaoAula() {
+						
+		fsmservidor.encerrarAula();
+	
+		if (controleAula.fecharAula()){
+	 
+			assertEquals(true,( fsmservidor.getState() == StateServer.logado.toString()));
+				
+		} else assertEquals(true,( fsmservidor.getState() == StateServer.computandoAula.toString()));
+					
+	 }*/
+	
 
 }
