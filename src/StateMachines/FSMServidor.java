@@ -142,8 +142,8 @@ public class FSMServidor implements FsmModel {
 	}
 	
 	
-	/*public boolean encerrarAulaGuard() {
-		return state.equals(StateServer.computandoAula.toString());
+	public boolean encerrarAulaGuard() {
+		return state.equals(StateServer.emAula.toString());
 	}
 
 	public @Action
@@ -152,7 +152,7 @@ public class FSMServidor implements FsmModel {
 				+ StateServer.logado.toString());
 		state = StateServer.logado.toString();
 
-	}*/
+	}
 	
 	
 
