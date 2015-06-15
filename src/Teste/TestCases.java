@@ -302,10 +302,10 @@ public class TestCases {
 	//	
 	//
 	
-	/*@Test
+	@Test
 	public void fecharSecaoAula() {
 						
-		fsmservidor.encerrarAula();
+		fsmservidor.sairdaAula();
 	
 		if (controleAula.fecharAula()){
 	 
@@ -313,7 +313,7 @@ public class TestCases {
 				
 		} else assertEquals(true,( fsmservidor.getState() == StateServer.computandoAula.toString()));
 					
-	 }*/
+	 }
 	
 
 }
