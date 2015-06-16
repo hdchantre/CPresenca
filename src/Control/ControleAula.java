@@ -35,7 +35,7 @@ public class ControleAula {
 		return turmas;
 	}
 
-	// Esse método deve computar as presenças e chamar o fechar aula
+	/*// Esse método deve computar as presenças e chamar o fechar aula
 	public boolean computarAula(Integer idTurma) {
 		fecharAula();
 		return true;
@@ -45,6 +45,6 @@ public class ControleAula {
 	// nao sei como isso deve ser feito ainda
 	public boolean fecharAula() {
 		return true;
-	}
+	}*/
 
 }

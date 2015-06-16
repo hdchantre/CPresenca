@@ -235,16 +235,16 @@ public class TestCases {
 	public void e_abrirSessaoJaAberta() {
 			
 	
-		fsmservidor.setState("logado");
+		fsmservidor.setState("emAula");
 		
 		Chamada chamadaTeste = controleAula.inicializaChamada("Eliane", 1);
 			
 		if (chamadaTeste == null)
 		{
-			fsmservidor.entrarEmAula();
+			
 			assertEquals(true,( fsmservidor.getState()== StateServer.emAula.toString()));
 		
-		} else assertEquals(true,( fsmservidor.getState()== StateServer.emAula.toString()));
+		} else assertEquals(true,( fsmservidor.getState()== StateServer.logado.toString()));
 		
 		
 	}
@@ -305,10 +305,11 @@ public class TestCases {
 	@Test
 	public void fecharSecaoAula() {
 						
-		fsmservidor.sairdaAula();
-	
-		if (controleAula.fecharAula()){
-	 
+		fsmservidor.setState("emAula");
+		Chamada chamadaTeste = controleAula.fecharAula(1);
+			
+		if (!chamadaTeste.getChamadaAberta()){
+			fsmservidor.sairdaAula();
 			assertEquals(true,( fsmservidor.getState() == StateServer.logado.toString()));
 				
 		} else assertEquals(true,( fsmservidor.getState() == StateServer.computandoAula.toString()));
