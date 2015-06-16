@@ -1,8 +1,9 @@
 package Teste;
-//import org.junit.FixMethodOrder;
-import static org.junit.Assert.assertEquals;
-//import org.junit.runners.MethodSorters;
 
+import static org.junit.Assert.assertEquals;
+
+
+import org.junit.AfterClass;
 import org.junit.Before;
 
 import org.junit.Test;
@@ -56,8 +57,13 @@ public class TestCases {
 	}
 
 
-	@Test
-	public void g_deslogarValido() {
+	@AfterClass
+	public static void h_deslogarValido() {
+		
+		ControleLogin controleLogin = new ControleLogin();
+		
+		FSMServidor fsmservidor = new FSMServidor();
+		
 
 		fsmservidor.setState("logado");
 		Usuario usuario = controleLogin.tentarDeslogar("Eliane", "Professor");
@@ -215,7 +221,7 @@ public class TestCases {
 		fsmservidor.setState("logado");
 		
 		Chamada chamadaTeste = controleAula.inicializaChamada("Eliane", 1);
-		//System.out.println("chamadaTeste"+ chamadaTeste);
+		System.out.println("chamadaTeste  "+ chamadaTeste.getChamadaAberta());
 		
 				
 		if (chamadaTeste.getChamadaAberta())
@@ -302,8 +308,8 @@ public class TestCases {
 	//	
 	//
 	
-	@Test
-	public void fecharSecaoAula() {
+	/*@Test
+	public void g_fecharSecaoAula() {
 						
 		fsmservidor.setState("emAula");
 		Chamada chamadaTeste = controleAula.fecharAula(1);
@@ -314,7 +320,7 @@ public class TestCases {
 				
 		} else assertEquals(true,( fsmservidor.getState() == StateServer.computandoAula.toString()));
 					
-	 }
+	 }*/
 	
 
 }
