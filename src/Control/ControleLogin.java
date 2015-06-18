@@ -1,12 +1,10 @@
 package Control;
 
+import Adaptador.LoginInterface;
 import DAO.LoginDAO;
-import Model.Aluno;
-import Model.Professor;
 import Model.Usuario;
-import XML.UsuarioLogin;
 
-public class ControleLogin {
+public class ControleLogin implements LoginInterface {
 
 	LoginDAO loginDAO = new LoginDAO();
 

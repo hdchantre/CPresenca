@@ -2,13 +2,11 @@ package Teste;
 
 import static org.junit.Assert.assertEquals;
 
-
 import org.junit.AfterClass;
 import org.junit.Before;
-
 import org.junit.Test;
 
-
+import Adaptador.LoginAdaptador;
 import Control.ControleAula;
 import Control.ControleLogin; //import Control.ControleTurma;
 import StateMachines.FSMServidor;
@@ -16,180 +14,249 @@ import StateMachines.StateServer;
 import Model.Chamada;
 import Model.Usuario;
 
-
 /**
  * @author Hernani Chantre
  * 
  */
-//@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+// @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestCases {
 
-	private ControleLogin controleLogin;
+	private LoginAdaptador loginAdaptador;
 	private FSMServidor fsmservidor;
 	private ControleAula controleAula;
 
 	@Before
 	public void setUp() throws Exception {
-		controleLogin = new ControleLogin();
+		loginAdaptador = new LoginAdaptador();
 
 		fsmservidor = new FSMServidor();
 
 		controleAula = new ControleAula();
-		
+
 	}
 
-	
 	@Test
-	public void logarValido() {
+	public void logarValidoProfessor() {
 		fsmservidor.getState();
-		Usuario usuario = controleLogin.tentarLogar("Eliane", "12345");
 
-		if (usuario.getIsLogado()) {
+		boolean isLogado = loginAdaptador.logarValidoProfessor("Eliane",
+				"12345");
+
+		if (isLogado) {
 			fsmservidor.loginServidor();
-			assertEquals(true, (fsmservidor.getState() == StateServer.logado
-					.toString()));
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.logado.toString()));
 
 		} else
-			assertEquals(true, (fsmservidor.getState() == StateServer.logado
-					.toString()));
-
-	}
-
-
-	
-	@Test
-	public void logarInvalido() {
-
-		fsmservidor.loginInvalido();
-		Usuario usuario = controleLogin.tentarLogar("Joaos", "123453");
-
-		if (usuario.getIsLogado()) {
-			fsmservidor.loginInvalido();
-			assertEquals(true, (fsmservidor.getState() == StateServer.inativo
-					.toString()));
-
-		} else
-			assertEquals(true, (fsmservidor.getState() == StateServer.inativo
-					.toString()));
-
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.logado.toString()));
 	}
 
 	@Test
-	public void senhaInvalida() {
+	public void logarValidoAluno() {
+		fsmservidor.getState();
 
-		fsmservidor.loginInvalido();
-		Usuario usuario = controleLogin.tentarLogar("Joao", "123453");
+		boolean isLogado = loginAdaptador.logarValidoAluno("Joao", "12345");
 
-		if (usuario.getIsLogado()) {
-			fsmservidor.loginInvalido();
-			assertEquals(true, (fsmservidor.getState() == StateServer.inativo
-					.toString()));
+		if (isLogado) {
+			fsmservidor.loginServidor();
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.logado.toString()));
 
 		} else
-			assertEquals(true, (fsmservidor.getState() == StateServer.inativo
-					.toString()));
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.logado.toString()));
+	}
+
+	@Test
+	public void logarUsuarioInvalidoProfessor() {
+
+		fsmservidor.loginInvalido();
+		boolean isNotLogado = loginAdaptador.logarUsuarioInvalidoProfessor(
+				"Elianee", "12345");
+
+		if (isNotLogado) {
+			fsmservidor.loginInvalido();
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.inativo.toString()));
+
+		} else {
+			fsmservidor.loginServidor();
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.inativo.toString()));
+		}
 
 	}
 
 	@Test
-	public void senha_ID_Invalida() {
+	public void logarUsuarioInvalidoAluno() {
 
 		fsmservidor.loginInvalido();
-		Usuario usuario = controleLogin.tentarLogar("Joaos", "123453");
+		boolean isNotLogado = loginAdaptador.logarUsuarioInvalidoAluno("Joaoa",
+				"12345");
 
-		if (usuario.getIsLogado()) {
+		if (isNotLogado) {
 			fsmservidor.loginInvalido();
-			assertEquals(true, (fsmservidor.getState() == StateServer.inativo
-					.toString()));
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.inativo.toString()));
 
-		} else
-			assertEquals(true, (fsmservidor.getState() == StateServer.inativo
-					.toString()));
+		} else {
+			fsmservidor.loginServidor();
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.inativo.toString()));
+		}
 
 	}
 
+	@Test
+	public void senhaInvalidaProfessor() {
+
+		fsmservidor.loginInvalido();
+		boolean isNotLogado = loginAdaptador.senhaInvalidaProfessor("Eliane",
+				"123453");
+
+		if (isNotLogado) {
+			fsmservidor.loginInvalido();
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.inativo.toString()));
+
+		} else {
+			fsmservidor.loginServidor();
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.inativo.toString()));
+		}
+	}
 	
+	@Test
+	public void senhaInvalidaAluno() {
+
+		fsmservidor.loginInvalido();
+		boolean isNotLogado = loginAdaptador.senhaInvalidaAluno("Joao",
+				"123453");
+
+		if (isNotLogado) {
+			fsmservidor.loginInvalido();
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.inativo.toString()));
+
+		} else {
+			fsmservidor.loginServidor();
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.inativo.toString()));
+		}
+	}
+
+	@Test
+	public void senha_ID_Invalida_Professor() {
+
+		fsmservidor.loginInvalido();
+		boolean isNotLogado = loginAdaptador.senha_ID_Invalida_Professor("Elianee", "123453");
+
+		if (isNotLogado) {
+			fsmservidor.loginInvalido();
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.inativo.toString()));
+
+		} else {
+			fsmservidor.loginServidor();
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.inativo.toString()));
+		}
+	}
 	
+	@Test
+	public void senha_ID_Invalida_Aluno() {
+
+		fsmservidor.loginInvalido();
+		boolean isNotLogado = loginAdaptador.senha_ID_Invalida_Aluno("Joaoa", "123453");
+
+		if (isNotLogado) {
+			fsmservidor.loginInvalido();
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.inativo.toString()));
+
+		} else {
+			fsmservidor.loginServidor();
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.inativo.toString()));
+		}
+	}
+
 	@Test
 	public void abrirSessaoDaAula() {
-			
-	
+
 		fsmservidor.setState("logado");
-		
+
 		Chamada chamadaTeste = controleAula.inicializaChamada("Eliane", 1);
-		
-		if (!chamadaTeste.getChamadaAberta())
-		{
+
+		if (!chamadaTeste.getChamadaAberta()) {
 			fsmservidor.entrarEmAula();
-			assertEquals(true,( fsmservidor.getState()== StateServer.emAula.toString()));
-		
-		} else assertEquals(true,( fsmservidor.getState()== StateServer.emAula.toString()));
-		
-		
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.emAula.toString()));
+
+		} else
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.emAula.toString()));
+
 	}
-	
-	
-		
-	
+
 	@Test
 	public void abrirSessaoJaAberta() {
-			
-	
+
 		fsmservidor.setState("emAula");
-		
+
 		Chamada chamadaTeste = controleAula.inicializaChamada("Eliane", 1);
-			
-		if (chamadaTeste == null)
-		{
-			
-			assertEquals(true,( fsmservidor.getState()== StateServer.emAula.toString()));
-		
-		} else assertEquals(true,( fsmservidor.getState()== StateServer.logado.toString()));
-		
-		
+
+		if (chamadaTeste == null) {
+
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.emAula.toString()));
+
+		} else
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.logado.toString()));
+
 	}
-	
+
 	@Test
 	public void fecharSecaoAula() {
-		
+
 		FSMServidor fsmservidor = new FSMServidor();
 		fsmservidor.setState("emAula");
 		Chamada chamadaTeste = controleAula.fecharAula(1);
-			
-		if (!chamadaTeste.getChamadaAberta()){
-			fsmservidor.sairdaAula();
-			assertEquals(true,( fsmservidor.getState() == StateServer.logado.toString()));
-				
-		} else assertEquals(true,( fsmservidor.getState() == StateServer.computandoAula.toString()));
-					
-	 }
 
-	
-	//@AfterClass
+		if (!chamadaTeste.getChamadaAberta()) {
+			fsmservidor.sairdaAula();
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.logado.toString()));
+
+		} else
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.computandoAula
+							.toString()));
+
+	}
+
+	// @AfterClass
 	@Test
 	public void deslogarValido() {
-		
+
 		ControleLogin controleLogin = new ControleLogin();
-		
+
 		FSMServidor fsmservidor = new FSMServidor();
-		
 
 		fsmservidor.setState("logado");
 		Usuario usuario = controleLogin.tentarDeslogar("Eliane", "Professor");
 
 		if (!usuario.getIsLogado()) {
 			fsmservidor.efetuarLogout();
-			assertEquals(true, (fsmservidor.getState() == StateServer.inativo
-					.toString()));
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.inativo.toString()));
 
 		} else
-			assertEquals(true, (fsmservidor.getState() == StateServer.inativo
-					.toString()));
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.inativo.toString()));
 
 	}
-
-		
-	
-	
 
 }
