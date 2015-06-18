@@ -39,8 +39,8 @@ public class TestCases {
 	public void logarValidoProfessor() {
 		fsmservidor.getState();
 
-		boolean isLogado = loginAdaptador.logarValidoProfessor("Eliane",
-				"12345");
+		boolean isLogado = loginAdaptador.tentarLogar("Eliane",
+				"12345", "Professor");
 
 		if (isLogado) {
 			fsmservidor.loginServidor();
@@ -56,7 +56,8 @@ public class TestCases {
 	public void logarValidoAluno() {
 		fsmservidor.getState();
 
-		boolean isLogado = loginAdaptador.logarValidoAluno("Joao", "12345");
+		boolean isLogado = loginAdaptador.tentarLogar("Joao",
+				"12345", "Aluno");
 
 		if (isLogado) {
 			fsmservidor.loginServidor();
@@ -72,10 +73,10 @@ public class TestCases {
 	public void logarUsuarioInvalidoProfessor() {
 
 		fsmservidor.loginInvalido();
-		boolean isNotLogado = loginAdaptador.logarUsuarioInvalidoProfessor(
-				"Elianee", "12345");
+		boolean isLogado = loginAdaptador.tentarLogar("Elianee",
+				"12345", "Professor");
 
-		if (isNotLogado) {
+		if (!isLogado) {
 			fsmservidor.loginInvalido();
 			assertEquals(true,
 					(fsmservidor.getState() == StateServer.inativo.toString()));
@@ -92,10 +93,10 @@ public class TestCases {
 	public void logarUsuarioInvalidoAluno() {
 
 		fsmservidor.loginInvalido();
-		boolean isNotLogado = loginAdaptador.logarUsuarioInvalidoAluno("Joaoa",
-				"12345");
+		boolean isLogado = loginAdaptador.tentarLogar("Joaoa",
+				"12345", "Aluno");
 
-		if (isNotLogado) {
+		if (!isLogado) {
 			fsmservidor.loginInvalido();
 			assertEquals(true,
 					(fsmservidor.getState() == StateServer.inativo.toString()));
@@ -112,10 +113,10 @@ public class TestCases {
 	public void senhaInvalidaProfessor() {
 
 		fsmservidor.loginInvalido();
-		boolean isNotLogado = loginAdaptador.senhaInvalidaProfessor("Eliane",
-				"123453");
+		boolean isLogado = loginAdaptador.tentarLogar("Eliane",
+				"123451", "Professor");
 
-		if (isNotLogado) {
+		if (!isLogado) {
 			fsmservidor.loginInvalido();
 			assertEquals(true,
 					(fsmservidor.getState() == StateServer.inativo.toString()));
@@ -131,10 +132,10 @@ public class TestCases {
 	public void senhaInvalidaAluno() {
 
 		fsmservidor.loginInvalido();
-		boolean isNotLogado = loginAdaptador.senhaInvalidaAluno("Joao",
-				"123453");
+		boolean isLogado = loginAdaptador.tentarLogar("Joao",
+				"123451", "Aluno");
 
-		if (isNotLogado) {
+		if (!isLogado) {
 			fsmservidor.loginInvalido();
 			assertEquals(true,
 					(fsmservidor.getState() == StateServer.inativo.toString()));
@@ -150,9 +151,10 @@ public class TestCases {
 	public void senha_ID_Invalida_Professor() {
 
 		fsmservidor.loginInvalido();
-		boolean isNotLogado = loginAdaptador.senha_ID_Invalida_Professor("Elianee", "123453");
+		boolean isLogado = loginAdaptador.tentarLogar("Elianee",
+				"123451", "Professor");
 
-		if (isNotLogado) {
+		if (!isLogado) {
 			fsmservidor.loginInvalido();
 			assertEquals(true,
 					(fsmservidor.getState() == StateServer.inativo.toString()));
@@ -168,9 +170,10 @@ public class TestCases {
 	public void senha_ID_Invalida_Aluno() {
 
 		fsmservidor.loginInvalido();
-		boolean isNotLogado = loginAdaptador.senha_ID_Invalida_Aluno("Joaoa", "123453");
+		boolean isLogado = loginAdaptador.tentarLogar("Joaao",
+				"123451", "Aluno");
 
-		if (isNotLogado) {
+		if (!isLogado) {
 			fsmservidor.loginInvalido();
 			assertEquals(true,
 					(fsmservidor.getState() == StateServer.inativo.toString()));
