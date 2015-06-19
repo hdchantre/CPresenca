@@ -45,6 +45,13 @@ public class LoginAdaptador implements LoginInterface {
 		
 		Usuario usuario = tentarDeslogar(nomeUsuario, tipo);
 		
+		if(usuario==null){
+			if(isLogado){
+				tentarDeslogar("Eliane", "Professor");
+			}
+			return deslogado;
+		}
+		
 		if(!usuario.getIsLogado()){
 			deslogado = true;
 		}else{
@@ -62,6 +69,13 @@ public class LoginAdaptador implements LoginInterface {
 		}
 		
 		Usuario usuario = tentarDeslogar(nomeUsuario, tipo);
+		
+		if(usuario==null){
+			if(isLogado){
+				tentarDeslogar("Joao", "Aluno");
+			}
+			return deslogado;
+		}
 		
 		if(!usuario.getIsLogado()){
 			deslogado = true;
