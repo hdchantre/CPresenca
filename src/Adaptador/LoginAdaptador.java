@@ -35,5 +35,41 @@ public class LoginAdaptador implements LoginInterface {
 		
 		return isLogado;
 	}
+	
+	public boolean tentarDeslogarProfessor(String nomeUsuario, String tipo, boolean isLogado){
+		boolean deslogado = false;
+		
+		if(isLogado){
+			tentarLogar("Eliane", "12345");
+		}
+		
+		Usuario usuario = tentarDeslogar(nomeUsuario, tipo);
+		
+		if(!usuario.getIsLogado()){
+			deslogado = true;
+		}else{
+			tentarDeslogar("Eliane", "Professor");
+		}
+		
+		return deslogado;
+	}
+	
+	public boolean tentarDeslogarAluno(String nomeUsuario, String tipo, boolean isLogado){
+		boolean deslogado = false;
+		
+		if(isLogado){
+			tentarLogar("Joao", "12345");
+		}
+		
+		Usuario usuario = tentarDeslogar(nomeUsuario, tipo);
+		
+		if(!usuario.getIsLogado()){
+			deslogado = true;
+		}else{
+			tentarDeslogar("Joao", "Aluno");
+		}
+		
+		return deslogado;
+	}
 
 }

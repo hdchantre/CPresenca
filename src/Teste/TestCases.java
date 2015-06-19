@@ -184,6 +184,158 @@ public class TestCases {
 					(fsmservidor.getState() == StateServer.inativo.toString()));
 		}
 	}
+	
+	@Test
+	public void deslogarValidoProfessor() {
+
+
+		fsmservidor.setState("logado");
+		boolean isDeslogado = loginAdaptador.tentarDeslogarProfessor("Eliane",
+				"Professor", true);
+
+		if (isDeslogado) {
+			fsmservidor.efetuarLogout();
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.inativo.toString()));
+		} else {
+			fsmservidor.loginServidor();
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.inativo.toString()));
+		}
+	}
+	
+	@Test
+	public void deslogarJaDeslogadoProfessor() {
+
+
+		fsmservidor.setState("logado");
+		boolean isDeslogado = loginAdaptador.tentarDeslogarProfessor("Eliane",
+				"Professor", false);
+
+		if (isDeslogado) {
+			fsmservidor.efetuarLogout();
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.inativo.toString()));
+		} else {
+			fsmservidor.loginServidor();
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.inativo.toString()));
+		}
+	}
+	
+	@Test
+	public void deslogarUsarioInvalidoProfessor() {
+
+
+		fsmservidor.setState("logado");
+		boolean isDeslogado = loginAdaptador.tentarDeslogarProfessor("Elianee",
+				"Professor", true);
+
+		if (isDeslogado) {
+			fsmservidor.efetuarLogout();
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.inativo.toString()));
+		} else {
+			fsmservidor.loginServidor();
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.inativo.toString()));
+		}
+	}
+	
+	@Test
+	public void deslogarJaDeslogadoUsuarioInvalidoProfessor() {
+
+
+		fsmservidor.setState("logado");
+		boolean isDeslogado = loginAdaptador.tentarDeslogarProfessor("Elianee",
+				"Professor", false);
+
+		if (isDeslogado) {
+			fsmservidor.efetuarLogout();
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.inativo.toString()));
+		} else {
+			fsmservidor.loginServidor();
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.inativo.toString()));
+		}
+	}
+	
+	@Test
+	public void deslogarValidoAluno() {
+
+		fsmservidor.setState("logado");
+		boolean isDeslogado = loginAdaptador.tentarDeslogarAluno("Joao",
+				"Aluno", true);
+
+		if (isDeslogado) {
+			fsmservidor.efetuarLogout();
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.inativo.toString()));
+		} else {
+			fsmservidor.loginServidor();
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.inativo.toString()));
+		}
+	}
+	
+	@Test
+	public void deslogarJaDeslogadoAluno() {
+
+
+		fsmservidor.setState("logado");
+		boolean isDeslogado = loginAdaptador.tentarDeslogarAluno("Joao",
+				"Aluno", false);
+
+		if (isDeslogado) {
+			fsmservidor.efetuarLogout();
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.inativo.toString()));
+		} else {
+			fsmservidor.loginServidor();
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.inativo.toString()));
+		}
+	}
+	
+	@Test
+	public void deslogarUsarioInvalidoAluno() {
+
+
+		fsmservidor.setState("logado");
+		boolean isDeslogado = loginAdaptador.tentarDeslogarAluno("Joaoa",
+				"Aluno", true);
+
+		if (isDeslogado) {
+			fsmservidor.efetuarLogout();
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.inativo.toString()));
+		} else {
+			fsmservidor.loginServidor();
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.inativo.toString()));
+		}
+	}
+	
+	@Test
+	public void deslogarJaDeslogadoUsuarioInvalidoAluno() {
+
+
+		fsmservidor.setState("logado");
+		boolean isDeslogado = loginAdaptador.tentarDeslogarAluno("Joaoa",
+				"Aluno", false);
+
+		if (isDeslogado) {
+			fsmservidor.efetuarLogout();
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.inativo.toString()));
+		} else {
+			fsmservidor.loginServidor();
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.inativo.toString()));
+		}
+	}
+	
 
 	@Test
 	public void abrirSessaoDaAula() {
@@ -237,28 +389,6 @@ public class TestCases {
 			assertEquals(true,
 					(fsmservidor.getState() == StateServer.computandoAula
 							.toString()));
-
-	}
-
-	// @AfterClass
-	@Test
-	public void deslogarValido() {
-
-		ControleLogin controleLogin = new ControleLogin();
-
-		FSMServidor fsmservidor = new FSMServidor();
-
-		fsmservidor.setState("logado");
-		Usuario usuario = controleLogin.tentarDeslogar("Eliane", "Professor");
-
-		if (!usuario.getIsLogado()) {
-			fsmservidor.efetuarLogout();
-			assertEquals(true,
-					(fsmservidor.getState() == StateServer.inativo.toString()));
-
-		} else
-			assertEquals(true,
-					(fsmservidor.getState() == StateServer.inativo.toString()));
 
 	}
 
