@@ -384,5 +384,39 @@ public class TestCases {
 
 		}
 	}
+	
+	@Test
+	public void fecharSessaoDaAula() {
 
+		fsmservidor.setState("emAula");
+
+		boolean isFechada = auladaptador.fecharAula(1, true);
+
+		if (isFechada) {
+			fsmservidor.sairdaAula();
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.logado.toString()));
+
+		} else
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.logado.toString()));
+
+	}
+	
+	@Test
+	public void fecharSessaoDaAulaJaFechada() {
+
+		fsmservidor.setState("logado");
+
+		boolean isFechada = auladaptador.fecharAula(1, false);
+
+		if (!isFechada) {
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.logado.toString()));
+
+		} else
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.logado.toString()));
+
+	}
 }

@@ -51,5 +51,26 @@ public class AulaAdaptador implements AulaInterface {
 
 		return isInizializada;
 	}
+	
+	public boolean fecharAula(Integer idTurma, boolean isAberta) {
+		boolean isFechada = false;
+		
+		loginAdaptador.tentarLogar("Eliane", "12345");
+		
+		if(isAberta){
+			inicializaChamada("Eliane", idTurma);
+		}
+		
+		Chamada chamada = fecharAula(idTurma);
+		
+		if(!chamada.getChamadaAberta()){
+			isFechada = true;
+			fecharAula(idTurma);
+		}
+		
+		loginAdaptador.tentarDeslogar("Eliane", "Professor");
+
+		return isFechada;
+	}
 
 }
