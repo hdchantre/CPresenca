@@ -6,6 +6,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
+import Adaptador.AulaAdaptador;
 import Adaptador.LoginAdaptador;
 import Control.ControleAula;
 import Control.ControleLogin; //import Control.ControleTurma;
@@ -22,8 +23,9 @@ import Model.Usuario;
 public class TestCases {
 
 	private LoginAdaptador loginAdaptador;
+	private AulaAdaptador auladaptador;
 	private FSMServidor fsmservidor;
-	private ControleAula controleAula;
+	
 
 	@Before
 	public void setUp() throws Exception {
@@ -31,7 +33,7 @@ public class TestCases {
 
 		fsmservidor = new FSMServidor();
 
-		controleAula = new ControleAula();
+		auladaptador = new AulaAdaptador();
 
 	}
 
@@ -337,14 +339,14 @@ public class TestCases {
 	}
 	
 
-/*	@Test
+	@Test
 	public void abrirSessaoDaAula() {
 
 		fsmservidor.setState("logado");
 
-		Chamada chamadaTeste = controleAula.inicializaChamada("Eliane", 1);
+		boolean isInicializada = auladaptador.inicializaChamada("Eliane", 1, false);
 
-		if (!chamadaTeste.getChamadaAberta()) {
+		if (isInicializada) {
 			fsmservidor.entrarEmAula();
 			assertEquals(true,
 					(fsmservidor.getState() == StateServer.emAula.toString()));
@@ -360,36 +362,27 @@ public class TestCases {
 
 		fsmservidor.setState("emAula");
 
-		Chamada chamadaTeste = controleAula.inicializaChamada("Eliane", 1);
+		boolean isInicializada = auladaptador.inicializaChamada("Eliane", 1, true);
 
-		if (chamadaTeste == null) {
-
+		if (!isInicializada) {
 			assertEquals(true,
 					(fsmservidor.getState() == StateServer.emAula.toString()));
-
-		} else
-			assertEquals(true,
-					(fsmservidor.getState() == StateServer.logado.toString()));
+		} 
 
 	}
-
+	
 	@Test
-	public void fecharSecaoAula() {
+	public void abrirSessaoTurmaIdErrada() {
 
-		FSMServidor fsmservidor = new FSMServidor();
-		fsmservidor.setState("emAula");
-		Chamada chamadaTeste = controleAula.fecharAula(1);
+		fsmservidor.setState("logado");
 
-		if (!chamadaTeste.getChamadaAberta()) {
-			fsmservidor.sairdaAula();
+		boolean isInicializada = auladaptador.inicializaChamada("Eliane", 1, false);
+
+		if (!isInicializada) {
 			assertEquals(true,
 					(fsmservidor.getState() == StateServer.logado.toString()));
 
-		} else
-			assertEquals(true,
-					(fsmservidor.getState() == StateServer.computandoAula
-							.toString()));
-
-	}*/
+		}
+	}
 
 }
