@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import Adaptador.AulaAdaptador;
 import Adaptador.LoginAdaptador;
-import StateMachines.FSMServidor;
+import StateMachines.FSMAluno;
 import StateMachines.StateServer;
 
 public class TestCasesAluno {
@@ -15,14 +15,14 @@ public class TestCasesAluno {
 	
 		private LoginAdaptador loginAdaptador;
 		private AulaAdaptador auladaptador;
-		private FSMServidor fsmAluno;
+		private FSMAluno fsmAluno;
 		
 
 		@Before
 		public void setUp() throws Exception {
 			loginAdaptador = new LoginAdaptador();
 
-			fsmAluno = new FSMServidor();
+			fsmAluno = new FSMAluno();
 
 			auladaptador = new AulaAdaptador();
 
