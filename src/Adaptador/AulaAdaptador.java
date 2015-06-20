@@ -72,5 +72,16 @@ public class AulaAdaptador implements AulaInterface {
 
 		return isFechada;
 	}
+	
+	
+	//Implementar esse método adaptador para quando o aluno entra em aula
+	public boolean entrarEmAula(Integer idTurma, boolean isAberta){
+		return true;
+	}
+	
+	public boolean sairDaAula(Integer idTurma){
+		return true;
+	}
+	
 
 }

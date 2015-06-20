@@ -32,7 +32,7 @@ public class FSMServidor implements FsmModel {
 	}
 
 	// Condição de Guarda
-	// "Para efetuar o login o Aluno deve estar inativo"
+	// "Para efetuar o login o professor deve estar inativo"
 	public boolean loginServidorGuard() {
 
 		return state.equals(StateServer.inativo.toString());
@@ -40,7 +40,7 @@ public class FSMServidor implements FsmModel {
 	}
 
 	// Ação
-	// "Após logar o aluno estra passa pro estado logado"
+	// "Após logar o professor estra passa pro estado logado"
 	public @Action
 	void loginServidor() {
 		System.out.println("loginServidor: " + state + " --> "
@@ -55,7 +55,7 @@ public class FSMServidor implements FsmModel {
 	}
 
 	// Ação
-	// "Após efetuar logout o aluno fica em estado inativo."
+	// "Após efetuar logout o professor fica em estado inativo."
 	public @Action
 	void loginInvalido() {
 		System.out.println("loginInvalido: " + state + " --> "
