@@ -3,7 +3,7 @@ package StateMachines;
 import nz.ac.waikato.modeljunit.*;
 import nz.ac.waikato.modeljunit.coverage.*;
 
-public class FSMAluno {
+public class FSMAluno implements FsmModel{
 
 		// Estados{inativo, logado}
 		private String state;
@@ -125,6 +125,17 @@ public class FSMAluno {
 
 		}
 
+		public boolean failEntrarEmAulaGuard() {
+			return state.equals(StateServer.logado.toString());
+		}
+
+		public @Action
+		void failEntrarEmAula() {
+			System.out.println("FailEntrarEmAula: " + state + " --> "
+					+ StateServer.logado.toString());
+			state = StateServer.logado.toString();
+
+		}
 		public boolean faillogoutAulaGuard() {
 			return state.equals(StateServer.emAula.toString());
 		}
@@ -169,7 +180,7 @@ public class FSMAluno {
 			tester.addListener("verbose", new VerboseListener(tester.getModel()));
 
 			// generate a small test suite of 20 steps (covers 4/5 transitions)
-			tester.generate(20);
+			tester.generate(30);
 
 			tester.getModel().printMessage(
 					trCoverage.getName() + " was " + trCoverage.toString());
