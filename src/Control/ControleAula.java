@@ -36,4 +36,9 @@ public class ControleAula implements AulaInterface {
 		return turmas;
 	}
 
+	@Override
+	public Chamada checkAluno(String nomeUsuario, Integer idTurma) {
+		return aulaDAO.checkAluno(nomeUsuario, idTurma);
+	}
+
 }

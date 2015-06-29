@@ -19,8 +19,8 @@ public class MainDAO {
 
 		try {
 			connection = DriverManager.getConnection(
-					"jdbc:postgresql://192.168.150.131:5432/projeto", "postgres",
-					"");
+					"jdbc:postgresql://localhost:5433/projeto", "postgres",
+					"jesik846213");
 		} catch (SQLException e) {
 			System.out.println("Connection Failed");
 			e.printStackTrace();

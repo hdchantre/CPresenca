@@ -92,5 +92,26 @@ public class AulaView {
 
 		return fChamada;
 	}
+	
+	@GET
+	@Path("/aluno/{usuario}/turmaId/{id}")
+	@Produces(MediaType.APPLICATION_XML)
+	public InicializaChamada checkAluno(
+			@PathParam("usuario") String nameUsuario,
+			@PathParam("id") Integer idTurma) {
+
+		InicializaChamada iChamada = new InicializaChamada();
+
+		Chamada chamada = controleAula.checkAluno(nameUsuario, idTurma);
+
+		if (chamada.getChamadaAberta()) {
+			iChamada.setInicializada(true);
+		} else {
+			iChamada.setInicializada(false);
+			iChamada.setCausaDoProblema("Chamada fechada");
+		}
+
+		return iChamada;
+	}
 
 }

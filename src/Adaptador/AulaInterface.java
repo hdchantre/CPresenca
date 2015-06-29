@@ -12,5 +12,7 @@ public interface AulaInterface {
 	public abstract Chamada fecharAula(Integer idTurma);
 	
 	public abstract List<Turma> getTurmas(String nomeUsuario, String tipo);
+	
+	public abstract Chamada checkAluno(String nomeUsuario, Integer idTurma);
 
 }

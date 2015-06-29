@@ -25,6 +25,12 @@ public class AulaAdaptador implements AulaInterface {
 	public List<Turma> getTurmas(String nomeUsuario, String tipo) {
 		return controleAula.getTurmas(nomeUsuario, tipo);
 	}
+	
+	@Override
+	public Chamada checkAluno(String nomeUsuario, Integer idTurma) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	public boolean inicializaChamada(String nomeUsuario, Integer idTurma,
 			boolean jaAberta) {
@@ -74,6 +80,7 @@ public class AulaAdaptador implements AulaInterface {
 	}
 	
 	
+	
 	//Implementar esse método adaptador para quando o aluno entra em aula
 	public boolean entrarEmAula(Integer idTurma, boolean isAberta){
 		return true;
@@ -82,6 +89,4 @@ public class AulaAdaptador implements AulaInterface {
 	public boolean sairDaAula(Integer idTurma){
 		return true;
 	}
-	
-
 }
