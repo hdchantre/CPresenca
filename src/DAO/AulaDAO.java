@@ -216,7 +216,7 @@ public class AulaDAO {
 				ps = connection.prepareStatement(DB_ALUNO_EM_AULA);
 
 				ps.setString(1, nomeUsuario);
-				ps.setInt(2, idTurma);
+				ps.setInt(2, rs.getInt("id"));
 
 				if (ps.executeUpdate() > 0) {
 					chamada.setChamadaAberta(true);

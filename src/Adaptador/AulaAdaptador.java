@@ -28,8 +28,7 @@ public class AulaAdaptador implements AulaInterface {
 	
 	@Override
 	public Chamada checkAluno(String nomeUsuario, Integer idTurma) {
-		// TODO Auto-generated method stub
-		return null;
+		return controleAula.checkAluno(nomeUsuario, idTurma);
 	}
 
 	public boolean inicializaChamada(String nomeUsuario, Integer idTurma,
@@ -80,10 +79,30 @@ public class AulaAdaptador implements AulaInterface {
 	}
 	
 	
-	
-	//Implementar esse método adaptador para quando o aluno entra em aula
-	public boolean entrarEmAula(Integer idTurma, boolean isAberta){
-		return true;
+	public boolean entrarEmAula(String nomeUsuario, Integer idTurma, boolean isAberta){
+		boolean entrou = false;
+		
+		loginAdaptador.tentarLogar("Joao", "12345");
+		
+		if(isAberta){
+			loginAdaptador.tentarLogar("Eliane", "12345");
+			inicializaChamada("Eliane", idTurma);
+		}
+		
+		Chamada chamada = checkAluno(nomeUsuario, idTurma);
+		
+		if(chamada.getChamadaAberta()){
+			entrou = true;
+		}
+		
+		if(isAberta){
+			fecharAula(idTurma);
+			loginAdaptador.tentarDeslogar("Eliane", "Professor");
+		}
+		
+		loginAdaptador.tentarDeslogar("Joao", "Aluno");
+		
+		return entrou;
 	}
 	
 	public boolean sairDaAula(Integer idTurma){

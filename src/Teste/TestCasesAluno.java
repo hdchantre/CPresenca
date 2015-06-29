@@ -186,7 +186,7 @@ public class TestCasesAluno {
 
 			fsmAluno.setState("logado");
 			
-			boolean isInicializada = auladaptador.entrarEmAula(1, true);
+			boolean isInicializada = auladaptador.entrarEmAula("Joao", 1, true);
 
 			if (isInicializada) {
 				fsmAluno.entrarEmAula();
@@ -204,7 +204,7 @@ public class TestCasesAluno {
 
 			fsmAluno.setState("logado");
 			
-			boolean isInicializada = auladaptador.entrarEmAula(20, true);
+			boolean isInicializada = auladaptador.entrarEmAula("Joao", 1, false);
 
 			if (!isInicializada) {
 				fsmAluno.failEntrarEmAula();
