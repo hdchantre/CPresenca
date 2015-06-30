@@ -10,7 +10,7 @@ public class FSMAluno implements FsmModel{
 		
 
 		public FSMAluno() {
-			this.state = StateServer.inativo.toString();
+			this.state = StatesAluno.inativo.toString();
 
 		}
 
@@ -24,14 +24,14 @@ public class FSMAluno implements FsmModel{
 
 
 		public void reset(boolean bln) {
-			state = StateServer.inativo.toString();
+			state = StatesAluno.inativo.toString();
 		}
 
 		// Condição de Guarda
 		// "Para efetuar o login o Aluno deve estar inativo"
 		public boolean loginServidorGuard() {
 
-			return state.equals(StateServer.inativo.toString());
+			return state.equals(StatesAluno.inativo.toString());
 
 		}
 
@@ -40,14 +40,14 @@ public class FSMAluno implements FsmModel{
 		public @Action
 		void loginServidor() {
 			System.out.println("loginServidor: " + state + " --> "
-					+ StateServer.logado.toString());
-			state = StateServer.logado.toString();
+					+ StatesAluno.logado.toString());
+			state = StatesAluno.logado.toString();
 		}
 
 		// Condição de guarda
 		// "Para efetuar logout precisa estar logado"
 		public boolean loginInvalidoGuard() {
-			return state.equals(StateServer.inativo.toString());
+			return state.equals(StatesAluno.inativo.toString());
 		}
 
 		// Ação
@@ -55,15 +55,15 @@ public class FSMAluno implements FsmModel{
 		public @Action
 		void loginInvalido() {
 			System.out.println("loginInvalido: " + state + " --> "
-					+ StateServer.inativo.toString());
-					state = StateServer.inativo.toString();
+					+ StatesAluno.inativo.toString());
+					state = StatesAluno.inativo.toString();
 		}
 		
 		
 		// Condição de guarda
 		// "Para efetuar logout precisa estar logado"
 		public boolean efetuarLogoutGuard() {
-			return state.equals(StateServer.logado.toString());
+			return state.equals(StatesAluno.logado.toString());
 		}
 
 		// Ação
@@ -71,93 +71,92 @@ public class FSMAluno implements FsmModel{
 		public @Action
 		void efetuarLogout() {
 			System.out.println("efetuarLogout: " + state + " --> "
-					+ StateServer.inativo.toString());
-			state = StateServer.inativo.toString();
+					+ StatesAluno.inativo.toString());
+			state = StatesAluno.inativo.toString();
 		}
 		
 
-//		public boolean mostrarTurmasGuard() {
-//			return state.equals(StateServer.logado.toString());
-//		}
-	//
-//		public @Action
-//		void mostrarTurmas() {
-//			System.out.println("mostrarTurmas: " + state + " --> "
-//					+ StateServer.visualizandoTurmas.toString());
-//			state = StateServer.visualizandoTurmas.toString();
-	//
-//		}
-	//	
-//		public boolean escolherTurmaGuard() {
-//			return state.equals(StateServer.visualizandoTurmas.toString());
-//		}
-	//
-//		public @Action
-//		void escolherTurma() {
-//			System.out.println("escolherTurma: " + state + " --> "
-//					+ StateServer.turmaEscolhida.toString());
-//			state = StateServer.turmaEscolhida.toString();
-	//
-//		}
-	//	
-	//	
-//		public boolean cancelaEscolhaTurmaGuard() {
-//			return state.equals(StateServer.turmaEscolhida.toString());
-//		}
-	//
-//		public @Action
-//		void cancelaEscolhaTurma() {
-//			System.out.println("cancelaEscolhaTurma: " + state + " --> "
-//					+ StateServer.visualizandoTurmas.toString());
-//			state = StateServer.visualizandoTurmas.toString();
-	//
-//		}
-
 		public boolean entrarEmAulaGuard() {
-			return state.equals(StateServer.logado.toString());
+			return state.equals(StatesAluno.logado.toString());
 		}
 
 		public @Action
 		void entrarEmAula() {
 			System.out.println("entrarEmAula: " + state + " --> "
-					+ StateServer.emAula.toString());
-			state = StateServer.emAula.toString();
+					+ StatesAluno.emAula.toString());
+			state = StatesAluno.emAula.toString();
 
 		}
 
+		public boolean verificarPresencasGuard() {
+			return state.equals(StatesAluno.logado.toString());
+		}
+
+		public @Action
+		void verificarPresencas() {
+			System.out.println("verificacaoPresencas: " + state + " --> "
+					+ StatesAluno.verificandoPresenca.toString());
+			state = StatesAluno.verificandoPresenca.toString();
+
+		}
+		
+		public boolean sairVerificacaoPresencasGuard() {
+			return state.equals(StatesAluno.verificandoPresenca.toString());
+		}
+
+		public @Action
+		void sairVerificacaoPresencas() {
+			System.out.println("verificacaoPresencas: " + state + " --> "
+					+ StatesAluno.logado.toString());
+			state = StatesAluno.logado.toString();
+
+		}		
+		
+		
 		public boolean failEntrarEmAulaGuard() {
-			return state.equals(StateServer.logado.toString());
+			return state.equals(StatesAluno.logado.toString());
 		}
 
 		public @Action
 		void failEntrarEmAula() {
 			System.out.println("FailEntrarEmAula: " + state + " --> "
-					+ StateServer.logado.toString());
-			state = StateServer.logado.toString();
+					+ StatesAluno.logado.toString());
+			state = StatesAluno.logado.toString();
 
 		}
 		public boolean faillogoutAulaGuard() {
-			return state.equals(StateServer.emAula.toString());
+			return state.equals(StatesAluno.emAula.toString());
 		}
 
 		public @Action
 		void faillogoutAula() {
 			System.out.println("faillogoutAula: " + state + " --> "
-					+ StateServer.emAula.toString());
-			state = StateServer.emAula.toString();
+					+ StatesAluno.emAula.toString());
+			state = StatesAluno.emAula.toString();
 
 		}
 		
+		public boolean enviarTicketGuard() {
+			return state.equals(StatesAluno.emAula.toString());
+		}
+
+		public @Action
+		void enviarTicket() {
+			System.out.println("enviarTicket: " + state + " --> "
+					+ StatesAluno.emAula.toString());
+			state = StatesAluno.emAula.toString();
+
+		}		
 		
 		public boolean sairdaAulaGuard() {
-			return state.equals(StateServer.emAula.toString());
+			return state.equals(StatesAluno.emAula.toString());
 		}
 
 		public @Action
 		void sairdaAula() {
 			System.out.println("sairdaAula: " + state + " --> "
-					+ StateServer.logado.toString());
-			state = StateServer.logado.toString();
+					+ StatesAluno.logado.toString());
+			state = StatesAluno.logado.toString();
 
 		}
 		
@@ -166,7 +165,7 @@ public class FSMAluno implements FsmModel{
 		@SuppressWarnings("deprecation")
 		public static void main(String args[]) {
 			// create our model and a test generation algorithm
-			Tester tester = new GreedyTester(new FSMServidor());
+			Tester tester = new GreedyTester(new FSMAluno());
 
 			// build the complete FSM graph for our model, just to ensure
 			// that we get accurate model coverage metrics.
@@ -180,7 +179,7 @@ public class FSMAluno implements FsmModel{
 			tester.addListener("verbose", new VerboseListener(tester.getModel()));
 
 			// generate a small test suite of 20 steps (covers 4/5 transitions)
-			tester.generate(30);
+			tester.generate(20);
 
 			tester.getModel().printMessage(
 					trCoverage.getName() + " was " + trCoverage.toString());

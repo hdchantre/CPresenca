@@ -16,5 +16,6 @@ public interface AulaInterface {
 	public abstract Chamada checkAluno(String nomeUsuario, Integer idTurma);
 	
 	public abstract Chamada checkOutAluno(String nomeUsuario);
+	
 
 }

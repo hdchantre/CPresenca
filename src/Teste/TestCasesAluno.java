@@ -5,17 +5,20 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
+import Adaptador.AlunoAdaptador;
 import Adaptador.AulaAdaptador;
 import Adaptador.LoginAdaptador;
 import StateMachines.FSMAluno;
 import StateMachines.StateServer;
+import StateMachines.StatesAluno;
 
 public class TestCasesAluno {
 
 	
 		private LoginAdaptador loginAdaptador;
-		private AulaAdaptador auladaptador;
+		private AulaAdaptador aulaAdaptador;
 		private FSMAluno fsmAluno;
+		private AlunoAdaptador alunoAdaptador;
 		
 
 		@Before
@@ -24,7 +27,8 @@ public class TestCasesAluno {
 
 			fsmAluno = new FSMAluno();
 
-			auladaptador = new AulaAdaptador();
+			aulaAdaptador = new AulaAdaptador();
+			alunoAdaptador =  new AlunoAdaptador();
 
 		}
 
@@ -38,11 +42,11 @@ public class TestCasesAluno {
 			if (isLogado) {
 				fsmAluno.loginServidor();
 				assertEquals(true,
-						(fsmAluno.getState() == StateServer.logado.toString()));
+						(fsmAluno.getState() == StatesAluno.logado.toString()));
 
 			} else
 				assertEquals(true,
-						(fsmAluno.getState() == StateServer.logado.toString()));
+						(fsmAluno.getState() == StatesAluno.logado.toString()));
 		}
 
 		@Test
@@ -55,12 +59,12 @@ public class TestCasesAluno {
 			if (!isLogado) {
 				fsmAluno.loginInvalido();
 				assertEquals(true,
-						(fsmAluno.getState() == StateServer.inativo.toString()));
+						(fsmAluno.getState() == StatesAluno.inativo.toString()));
 
 			} else {
 				fsmAluno.loginServidor();
 				assertEquals(true,
-						(fsmAluno.getState() == StateServer.inativo.toString()));
+						(fsmAluno.getState() == StatesAluno.inativo.toString()));
 			}
 
 		}
@@ -76,12 +80,12 @@ public class TestCasesAluno {
 			if (!isLogado) {
 				fsmAluno.loginInvalido();
 				assertEquals(true,
-						(fsmAluno.getState() == StateServer.inativo.toString()));
+						(fsmAluno.getState() == StatesAluno.inativo.toString()));
 
 			} else {
 				fsmAluno.loginServidor();
 				assertEquals(true,
-						(fsmAluno.getState() == StateServer.inativo.toString()));
+						(fsmAluno.getState() == StatesAluno.inativo.toString()));
 			}
 		}
 
@@ -96,12 +100,12 @@ public class TestCasesAluno {
 			if (!isLogado) {
 				fsmAluno.loginInvalido();
 				assertEquals(true,
-						(fsmAluno.getState() == StateServer.inativo.toString()));
+						(fsmAluno.getState() == StatesAluno.inativo.toString()));
 
 			} else {
 				fsmAluno.loginServidor();
 				assertEquals(true,
-						(fsmAluno.getState() == StateServer.inativo.toString()));
+						(fsmAluno.getState() == StatesAluno.inativo.toString()));
 			}
 		}
 		
@@ -115,11 +119,11 @@ public class TestCasesAluno {
 			if (isDeslogado) {
 				fsmAluno.efetuarLogout();
 				assertEquals(true,
-						(fsmAluno.getState() == StateServer.inativo.toString()));
+						(fsmAluno.getState() == StatesAluno.inativo.toString()));
 			} else {
 				fsmAluno.loginServidor();
 				assertEquals(true,
-						(fsmAluno.getState() == StateServer.inativo.toString()));
+						(fsmAluno.getState() == StatesAluno.inativo.toString()));
 			}
 		}
 		
@@ -134,11 +138,11 @@ public class TestCasesAluno {
 			if (isDeslogado) {
 				fsmAluno.efetuarLogout();
 				assertEquals(true,
-						(fsmAluno.getState() == StateServer.inativo.toString()));
+						(fsmAluno.getState() == StatesAluno.inativo.toString()));
 			} else {
 				fsmAluno.loginServidor();
 				assertEquals(true,
-						(fsmAluno.getState() == StateServer.inativo.toString()));
+						(fsmAluno.getState() == StatesAluno.inativo.toString()));
 			}
 		}
 		
@@ -153,11 +157,11 @@ public class TestCasesAluno {
 			if (isDeslogado) {
 				fsmAluno.efetuarLogout();
 				assertEquals(true,
-						(fsmAluno.getState() == StateServer.inativo.toString()));
+						(fsmAluno.getState() == StatesAluno.inativo.toString()));
 			} else {
 				fsmAluno.loginServidor();
 				assertEquals(true,
-						(fsmAluno.getState() == StateServer.logado.toString()));
+						(fsmAluno.getState() == StatesAluno.logado.toString()));
 			}
 		}
 		
@@ -172,11 +176,11 @@ public class TestCasesAluno {
 			if (isDeslogado) {
 				fsmAluno.efetuarLogout();
 				assertEquals(true,
-						(fsmAluno.getState() == StateServer.inativo.toString()));
+						(fsmAluno.getState() == StatesAluno.inativo.toString()));
 			} else {
 				fsmAluno.loginServidor();
 				assertEquals(true,
-						(fsmAluno.getState() == StateServer.logado.toString()));
+						(fsmAluno.getState() == StatesAluno.logado.toString()));
 			}
 		}
 		
@@ -186,16 +190,16 @@ public class TestCasesAluno {
 
 			fsmAluno.setState("logado");
 			
-			boolean isInicializada = auladaptador.entrarEmAula("Joao", 1, true);
+			boolean isInicializada = aulaAdaptador.entrarEmAula("Joao", 1, true);
 
 			if (isInicializada) {
 				fsmAluno.entrarEmAula();
 				assertEquals(true,
-						(fsmAluno.getState() == StateServer.emAula.toString()));
+						(fsmAluno.getState() == StatesAluno.emAula.toString()));
 
 			} else
 				assertEquals(true,
-						(fsmAluno.getState() == StateServer.emAula.toString()));
+						(fsmAluno.getState() == StatesAluno.emAula.toString()));
 
 		}	
 		
@@ -204,16 +208,52 @@ public class TestCasesAluno {
 
 			fsmAluno.setState("logado");
 			
-			boolean isInicializada = auladaptador.entrarEmAula("Joao", 1, false);
+			boolean isInicializada = aulaAdaptador.entrarEmAula("Joao", 20, false);
 
 			if (!isInicializada) {
 				fsmAluno.failEntrarEmAula();
 				assertEquals(true,
-						(fsmAluno.getState() == StateServer.logado.toString()));
+						(fsmAluno.getState() == StatesAluno.logado.toString()));
 
 			} else
 				assertEquals(true,
-						(fsmAluno.getState() == StateServer.logado.toString()));
+						(fsmAluno.getState() == StatesAluno.logado.toString()));
+
+		}
+		
+		@Test
+		public void entrarEmAulaUsuarioInvalido() {
+
+			fsmAluno.setState("logado");
+			
+			boolean isInicializada = aulaAdaptador.entrarEmAula("Joaooo", 1, false);
+
+			if (!isInicializada) {
+				fsmAluno.failEntrarEmAula();
+				assertEquals(true,
+						(fsmAluno.getState() == StatesAluno.logado.toString()));
+
+			} else
+				assertEquals(true,
+						(fsmAluno.getState() == StatesAluno.logado.toString()));
+
+		}
+		
+		@Test
+		public void entrarEmAulaUsuarioETurmaInvalidos() {
+
+			fsmAluno.setState("logado");
+			
+			boolean isInicializada = aulaAdaptador.entrarEmAula("Joaooo", 20, false);
+
+			if (!isInicializada) {
+				fsmAluno.failEntrarEmAula();
+				assertEquals(true,
+						(fsmAluno.getState() == StatesAluno.logado.toString()));
+
+			} else
+				assertEquals(true,
+						(fsmAluno.getState() == StatesAluno.logado.toString()));
 
 		}
 
@@ -223,37 +263,166 @@ public class TestCasesAluno {
 
 			fsmAluno.setState("emAula");
 
-			boolean isOut = auladaptador.sairDaAula("Joao");
+			boolean isOut = aulaAdaptador.sairDaAula("Joao");
 
 			if (isOut) {
 				fsmAluno.sairdaAula();
 				assertEquals(true,
-						(fsmAluno.getState() == StateServer.logado.toString()));
+						(fsmAluno.getState() == StatesAluno.logado.toString()));
 
 			} else
 				assertEquals(true,
-						(fsmAluno.getState() == StateServer.logado.toString()));
+						(fsmAluno.getState() == StatesAluno.logado.toString()));
 
 		}
 		
 		
 		@Test
-		public void sairDaAulaTurmaInvalida() {
+		public void sairDaAulaUsuarioInvalido() {
 
 			fsmAluno.setState("emAula");
 
-			boolean isOut = auladaptador.sairDaAula("Eliane");
+			boolean isOut = aulaAdaptador.sairDaAula("Eliane");
 
 			if (!isOut) {
 				fsmAluno.faillogoutAula();
 				assertEquals(true,
-						(fsmAluno.getState() == StateServer.emAula.toString()));
+						(fsmAluno.getState() == StatesAluno.emAula.toString()));
 
 			} else
 				assertEquals(true,
-						(fsmAluno.getState() == StateServer.emAula.toString()));
+						(fsmAluno.getState() == StatesAluno.emAula.toString()));
 
 		}
+		
+		@Test
+		public void enviarTicket() {
+
+			fsmAluno.setState("emAula");
+
+			boolean isSent = aulaAdaptador.enviarTicket("Joao");
+
+			if (!isSent) {
+				fsmAluno.enviarTicket();
+				assertEquals(true,
+						(fsmAluno.getState() == StatesAluno.emAula.toString()));
+
+			} else
+				assertEquals(true,
+						(fsmAluno.getState() == StatesAluno.emAula.toString()));
+
+		}
+		
+		@Test
+		public void verificarPresencasValido() {
+
+			fsmAluno.setState("verificandoPresenca");
+
+			boolean isOk = alunoAdaptador.verificarPresencas("Joao", 1);
+
+			if (!isOk) {
+				fsmAluno.verificarPresencas();
+				assertEquals(true,
+						(fsmAluno.getState() == StatesAluno.verificandoPresenca.toString()));
+
+			} else
+				assertEquals(true,
+						(fsmAluno.getState() == StatesAluno.verificandoPresenca.toString()));
+
+		}
+		
+		//Não precisa
+		@Test
+		public void verificarPresencasNomeInvalido() {
+
+			fsmAluno.setState("logado");
+
+			boolean isOk = alunoAdaptador.verificarPresencas("Joaooo", 1);
+
+			if (!isOk) {
+				fsmAluno.verificarPresencas();
+				assertEquals(true,
+						(fsmAluno.getState() == StatesAluno.logado.toString()));
+
+			} else
+				assertEquals(true,
+						(fsmAluno.getState() == StatesAluno.logado.toString()));
+
+		}
+		
+		//Não precisa
+		@Test
+		public void verificarPresencasTurmaInvalida() {
+
+			fsmAluno.setState("logado");
+
+			boolean isOk = alunoAdaptador.verificarPresencas("Joao", 20);
+
+			if (!isOk) {
+				fsmAluno.verificarPresencas();
+				assertEquals(true,
+						(fsmAluno.getState() == StatesAluno.logado.toString()));
+
+			} else
+				assertEquals(true,
+						(fsmAluno.getState() == StatesAluno.logado.toString()));
+
+		}
+		
+		@Test
+		public void sairVerificarPresencasValido() {
+
+			fsmAluno.setState("verificandoPresenca");
+
+			boolean isOk = alunoAdaptador.sairVerficarPresencas("Joao", 1);
+
+			if (!isOk) {
+				fsmAluno.sairVerificacaoPresencas();
+				assertEquals(true,
+						(fsmAluno.getState() == StatesAluno.logado.toString()));
+
+			} else
+				assertEquals(true,
+						(fsmAluno.getState() == StatesAluno.logado.toString()));
+
+		}
+		
+		@Test
+		public void sairVerificarPresencasTurmaInvalida() {
+
+			fsmAluno.setState("verificandoPresenca");
+
+			boolean isOk = alunoAdaptador.sairVerficarPresencas("Joao", 20);
+
+			if (!isOk) {
+				fsmAluno.sairVerificacaoPresencas();
+				assertEquals(true,
+						(fsmAluno.getState() == StatesAluno.verificandoPresenca.toString()));
+
+			} else
+				assertEquals(true,
+						(fsmAluno.getState() == StatesAluno.verificandoPresenca.toString()));
+
+		}
+		
+		@Test
+		public void sairVerificarPresencasNomeInvalido() {
+
+			fsmAluno.setState("verificandoPresenca");
+
+			boolean isOk = alunoAdaptador.sairVerficarPresencas("Joaooo", 1);
+
+			if (!isOk) {
+				fsmAluno.sairVerificacaoPresencas();
+				assertEquals(true,
+						(fsmAluno.getState() == StatesAluno.verificandoPresenca.toString()));
+
+			} else
+				assertEquals(true,
+						(fsmAluno.getState() == StatesAluno.verificandoPresenca.toString()));
+
+		}
+		
 
 	}
 

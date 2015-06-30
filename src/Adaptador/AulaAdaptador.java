@@ -132,5 +132,10 @@ public class AulaAdaptador implements AulaInterface {
 		
 		return saiu;
 	}
+	
+	public boolean enviarTicket(String nomeUsuario)
+	{
+		return true;
+	}
 
 }
