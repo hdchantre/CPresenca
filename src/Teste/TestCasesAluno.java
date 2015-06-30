@@ -223,7 +223,7 @@ public class TestCasesAluno {
 
 			fsmAluno.setState("emAula");
 
-			boolean isOut = auladaptador.sairDaAula(1);
+			boolean isOut = auladaptador.sairDaAula("Joao");
 
 			if (isOut) {
 				fsmAluno.sairdaAula();
@@ -242,7 +242,7 @@ public class TestCasesAluno {
 
 			fsmAluno.setState("emAula");
 
-			boolean isOut = auladaptador.sairDaAula(20);
+			boolean isOut = auladaptador.sairDaAula("Eliane");
 
 			if (!isOut) {
 				fsmAluno.faillogoutAula();

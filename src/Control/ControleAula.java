@@ -8,8 +8,6 @@ import DAO.AulaDAO;
 import DAO.LoginDAO;
 import Model.Chamada;
 import Model.Turma;
-import XML.InicializaChamada;
-import XML.TurmaLogin;
 
 public class ControleAula implements AulaInterface {
 
@@ -39,6 +37,11 @@ public class ControleAula implements AulaInterface {
 	@Override
 	public Chamada checkAluno(String nomeUsuario, Integer idTurma) {
 		return aulaDAO.checkAluno(nomeUsuario, idTurma);
+	}
+
+	@Override
+	public Chamada checkOutAluno(String nomeUsuario) {
+		return aulaDAO.checkOutAluno(nomeUsuario);
 	}
 
 }

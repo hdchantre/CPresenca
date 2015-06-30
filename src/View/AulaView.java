@@ -73,7 +73,7 @@ public class AulaView {
 
 		return turmasLogin;
 	}
-	
+
 	@GET
 	@Path("/turmaId/{id}")
 	@Produces(MediaType.APPLICATION_XML)
@@ -92,7 +92,7 @@ public class AulaView {
 
 		return fChamada;
 	}
-	
+
 	@GET
 	@Path("/aluno/{usuario}/turmaId/{id}")
 	@Produces(MediaType.APPLICATION_XML)
@@ -109,6 +109,26 @@ public class AulaView {
 		} else {
 			iChamada.setInicializada(false);
 			iChamada.setCausaDoProblema("Chamada fechada");
+		}
+
+		return iChamada;
+	}
+
+	@GET
+	@Path("/aluno/{usuario}")
+	@Produces(MediaType.APPLICATION_XML)
+	public InicializaChamada checkOutAluno(
+			@PathParam("usuario") String nameUsuario) {
+
+		InicializaChamada iChamada = new InicializaChamada();
+
+		Chamada chamada = controleAula.checkOutAluno(nameUsuario);
+
+		if (chamada.getChamadaAberta()) {
+			iChamada.setInicializada(true);
+			iChamada.setCausaDoProblema("Continua em Aula");
+		} else {
+			iChamada.setInicializada(false);
 		}
 
 		return iChamada;

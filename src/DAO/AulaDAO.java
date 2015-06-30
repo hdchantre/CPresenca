@@ -12,7 +12,6 @@ import java.util.List;
 import Model.Chamada;
 import Model.Disciplina;
 import Model.Turma;
-import XML.InicializaChamada;
 
 public class AulaDAO {
 
@@ -27,6 +26,8 @@ public class AulaDAO {
 	private static final String DB_GET_TURMA_PROFESSOR = "SELECT t.id, t.disciplina, d.nome, c.fim_aula FROM turma as t, disciplina as d, chamada as c WHERE datafim > CURRENT_TIMESTAMP and professor = (select id from usuario where usuario = ?) and t.disciplina = d.id and c.turma = t.id";
 	private static final String DB_GET_TURMA_ALUNO = "SELECT t.id, t.disciplina, d.nome, c.fim_aula FROM turma as t, disciplina as d, turma_aluno as ta, chamada as c WHERE t.datafim > CURRENT_TIMESTAMP and ta.aluno = (select id from usuario where usuario = ?) and t.disciplina = d.id and ta.turma = t.id and c.turma = t.id";
 	private static final String DB_ALUNO_EM_AULA = "insert into chamada_aluno(aluno_id, chamada_id, in_aula) values ((select id from usuario where usuario = ?),?,true)";
+	private static final String DB_VERIFICA_ALUNO_EM_AULA = "select * from chamada_aluno where aluno_id = (select id from usuario where usuario = ?)";
+	private static final String DB_SAIR_AULA = "update chamada_aluno set in_aula = false where aluno_id = (select id from usuario where usuario = ?)";
 
 	public Chamada inicializaChamada(String nomeUsuario, Integer idTurma) {
 		Chamada chamada = new Chamada();
@@ -220,6 +221,38 @@ public class AulaDAO {
 
 				if (ps.executeUpdate() > 0) {
 					chamada.setChamadaAberta(true);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		mainDAO.fecharConexaoDB();
+		
+		return chamada;
+	}
+	
+	public Chamada checkOutAluno(String nomeUsuario){
+		Chamada chamada = new Chamada();
+		chamada.setChamadaAberta(true);
+		
+		connection = mainDAO.conectarDB();
+
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(DB_VERIFICA_ALUNO_EM_AULA);
+
+			ps.setString(1, nomeUsuario);
+
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+				ps = connection.prepareStatement(DB_SAIR_AULA);
+
+				ps.setString(1, nomeUsuario);
+
+				if (ps.executeUpdate() > 0) {
+					chamada.setChamadaAberta(false);
 				}
 			}
 		} catch (SQLException e) {
