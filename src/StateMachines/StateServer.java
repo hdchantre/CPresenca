@@ -7,5 +7,7 @@ public enum StateServer {
 	visualizandoTurmas,
 	turmaEscolhida,
 	emAula,
-	computandoAula
+	computandoAula,
+	configurandoParametro,
+	verificandoLista
 }
