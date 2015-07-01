@@ -44,4 +44,9 @@ public class ControleAula implements AulaInterface {
 		return aulaDAO.checkOutAluno(nomeUsuario);
 	}
 
+	@Override
+	public boolean ticket(String nomeUsuario, float posiX, float posiY) {
+		return aulaDAO.ticketAluno(nomeUsuario, posiX, posiY).getChamadaAberta();
+	}
+
 }

@@ -35,6 +35,11 @@ public class AulaAdaptador implements AulaInterface {
 	public Chamada checkOutAluno(String nomeUsuario) {
 		return controleAula.checkOutAluno(nomeUsuario);
 	}
+	
+	@Override
+	public boolean ticket(String nomeUsuario, float posiX, float posiY) {
+		return controleAula.ticket(nomeUsuario, posiX, posiY);
+	}
 
 	public boolean inicializaChamada(String nomeUsuario, Integer idTurma,
 			boolean jaAberta) {
@@ -114,10 +119,11 @@ public class AulaAdaptador implements AulaInterface {
 	public boolean sairDaAula(String nomeUsuario) {
 		boolean saiu = false;
 
-		loginAdaptador.tentarLogar("Joao", "12345");
-
 		loginAdaptador.tentarLogar("Eliane", "12345");
 		inicializaChamada("Eliane", 1);
+		
+		loginAdaptador.tentarLogar("Joao", "12345");
+		checkAluno(nomeUsuario, 1);
 
 		Chamada chamada = checkOutAluno(nomeUsuario);
 
@@ -133,9 +139,28 @@ public class AulaAdaptador implements AulaInterface {
 		return saiu;
 	}
 	
-	public boolean enviarTicket(String nomeUsuario)
+	public boolean enviarTicket(String nomeUsuario, float posix, float posiy)
 	{
-		return true;
+		Boolean check = false;
+		
+		loginAdaptador.tentarLogar("Eliane", "12345");
+		
+		inicializaChamada("Eliane", 1);
+		
+		loginAdaptador.tentarLogar(nomeUsuario, "12345");
+		
+		checkAluno(nomeUsuario, 1);
+		
+		check = ticket(nomeUsuario, posix, posiy);
+		
+		fecharAula(1);
+		loginAdaptador.tentarDeslogar("Eliane", "Professor");
+
+		loginAdaptador.tentarDeslogar(nomeUsuario, "Aluno");
+		
+		return check;
 	}
+
+	
 
 }

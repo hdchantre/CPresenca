@@ -134,4 +134,18 @@ public class AulaView {
 		return iChamada;
 	}
 
+	@GET
+	@Path("/aluno/{usuario}/posix/{x}/posiy/{y}")
+	@Produces(MediaType.APPLICATION_XML)
+	public Chamada ticket(@PathParam("usuario") String nameUsuario,
+			@PathParam("x") float posiX, @PathParam("y") float posiY) {
+
+		Chamada chamada = new Chamada();
+
+		Boolean tudoCerto = controleAula.ticket(nameUsuario, posiX, posiY);
+		chamada.setChamadaAberta(tudoCerto);
+
+		return chamada;
+	}
+
 }

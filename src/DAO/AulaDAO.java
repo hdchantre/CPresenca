@@ -28,6 +28,7 @@ public class AulaDAO {
 	private static final String DB_ALUNO_EM_AULA = "insert into chamada_aluno(aluno_id, chamada_id, in_aula) values ((select id from usuario where usuario = ?),?,true)";
 	private static final String DB_VERIFICA_ALUNO_EM_AULA = "select * from chamada_aluno where aluno_id = (select id from usuario where usuario = ?)";
 	private static final String DB_SAIR_AULA = "update chamada_aluno set in_aula = false where aluno_id = (select id from usuario where usuario = ?)";
+	private static final String DB_SALVAR_TICKET = "insert into ticket (aluno_id, chamada_id, posi_x, posi_y, data_ticket, hora_ticket) values ((select id from usuario where usuario = ?),?,?,?,?,?)";
 
 	public Chamada inicializaChamada(String nomeUsuario, Integer idTurma) {
 		Chamada chamada = new Chamada();
@@ -254,6 +255,44 @@ public class AulaDAO {
 				if (ps.executeUpdate() > 0) {
 					chamada.setChamadaAberta(false);
 				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		mainDAO.fecharConexaoDB();
+		
+		return chamada;
+	}
+	
+	public Chamada ticketAluno(String nomeUsuario, float posiX, float posiY){
+		Chamada chamada = new Chamada();
+		chamada.setChamadaAberta(false);
+		
+		connection = mainDAO.conectarDB();
+
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(DB_VERIFICA_ALUNO_EM_AULA);
+
+			ps.setString(1, nomeUsuario);
+
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+				ps = connection.prepareStatement(DB_SALVAR_TICKET);
+				
+				java.sql.Date data = new java.sql.Date((new Date()).getTime());
+				
+				ps.setString(1, nomeUsuario);
+				ps.setInt(2, rs.getInt("id"));
+				ps.setFloat(3, posiX);
+				ps.setFloat(4, posiY);
+				ps.setDate(5, data);
+				ps.setTimestamp(6, new Timestamp(System.currentTimeMillis()));
+
+				ps.executeUpdate();
+				chamada.setChamadaAberta(true);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

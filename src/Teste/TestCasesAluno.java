@@ -300,7 +300,7 @@ public class TestCasesAluno {
 
 			fsmAluno.setState("emAula");
 
-			boolean isSent = aulaAdaptador.enviarTicket("Joao");
+			boolean isSent = aulaAdaptador.enviarTicket("Joao", 1 , 1);
 
 			if (!isSent) {
 				fsmAluno.enviarTicket();
