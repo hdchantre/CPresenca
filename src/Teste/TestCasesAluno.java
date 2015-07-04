@@ -5,9 +5,9 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import Adaptador.AlunoAdaptador;
 import Adaptador.AulaAdaptador;
 import Adaptador.LoginAdaptador;
+import Adaptador.PresencaAdaptador;
 import StateMachines.FSMAluno;
 import StateMachines.StateServer;
 import StateMachines.StatesAluno;
@@ -18,7 +18,7 @@ public class TestCasesAluno {
 		private LoginAdaptador loginAdaptador;
 		private AulaAdaptador aulaAdaptador;
 		private FSMAluno fsmAluno;
-		private AlunoAdaptador alunoAdaptador;
+		private PresencaAdaptador presencaAdaptador;
 		
 
 		@Before
@@ -28,7 +28,7 @@ public class TestCasesAluno {
 			fsmAluno = new FSMAluno();
 
 			aulaAdaptador = new AulaAdaptador();
-			alunoAdaptador =  new AlunoAdaptador();
+			presencaAdaptador =  new PresencaAdaptador();
 
 		}
 
@@ -318,7 +318,7 @@ public class TestCasesAluno {
 
 			fsmAluno.setState("verificandoPresenca");
 
-			boolean isOk = alunoAdaptador.verificarPresencas("Joao", 1);
+			boolean isOk = presencaAdaptador.verificarPresencas("Joao", 1);
 
 			if (!isOk) {
 				fsmAluno.verificarPresencas();
@@ -337,7 +337,7 @@ public class TestCasesAluno {
 
 			fsmAluno.setState("logado");
 
-			boolean isOk = alunoAdaptador.verificarPresencas("Joaooo", 1);
+			boolean isOk = presencaAdaptador.verificarPresencas("Joaooo", 1);
 
 			if (!isOk) {
 				fsmAluno.verificarPresencas();
@@ -356,7 +356,7 @@ public class TestCasesAluno {
 
 			fsmAluno.setState("logado");
 
-			boolean isOk = alunoAdaptador.verificarPresencas("Joao", 20);
+			boolean isOk = presencaAdaptador.verificarPresencas("Joao", 20);
 
 			if (!isOk) {
 				fsmAluno.verificarPresencas();
@@ -374,7 +374,7 @@ public class TestCasesAluno {
 
 			fsmAluno.setState("verificandoPresenca");
 
-			boolean isOk = alunoAdaptador.sairVerficarPresencas("Joao", 1);
+			boolean isOk = presencaAdaptador.sairVerficarPresencas("Joao", 1);
 
 			if (!isOk) {
 				fsmAluno.sairVerificacaoPresencas();
@@ -392,7 +392,7 @@ public class TestCasesAluno {
 
 			fsmAluno.setState("verificandoPresenca");
 
-			boolean isOk = alunoAdaptador.sairVerficarPresencas("Joao", 20);
+			boolean isOk = presencaAdaptador.sairVerficarPresencas("Joao", 20);
 
 			if (!isOk) {
 				fsmAluno.sairVerificacaoPresencas();
@@ -410,7 +410,7 @@ public class TestCasesAluno {
 
 			fsmAluno.setState("verificandoPresenca");
 
-			boolean isOk = alunoAdaptador.sairVerficarPresencas("Joaooo", 1);
+			boolean isOk = presencaAdaptador.sairVerficarPresencas("Joaooo", 1);
 
 			if (!isOk) {
 				fsmAluno.sairVerificacaoPresencas();
