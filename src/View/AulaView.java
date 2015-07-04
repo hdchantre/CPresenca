@@ -118,6 +118,7 @@ public class AulaView {
 
 		if (chamada.getChamadaAberta()) {
 			iChamada.setInicializada(true);
+			iChamada.setChamadaID(chamada.getId());
 		} else {
 			iChamada.setInicializada(false);
 			iChamada.setCausaDoProblema("Chamada fechada");
@@ -127,9 +128,9 @@ public class AulaView {
 	}
 
 	@GET
-	@Path("/aluno/{usuario}")
+	@Path("/aluno/{usuario}/chamada/{id}")
 	@Produces(MediaType.APPLICATION_XML)
-	public InicializaChamada checkOutAluno(
+	public InicializaChamada checkOutAluno(@PathParam("id") Integer chamadaId,
 			@PathParam("usuario") String nameUsuario) {
 
 		InicializaChamada iChamada = new InicializaChamada();
@@ -141,13 +142,18 @@ public class AulaView {
 			iChamada.setCausaDoProblema("Continua em Aula");
 		} else {
 			iChamada.setInicializada(false);
+			if(controleAula.verificarPresencaAluno(chamadaId, nameUsuario)){
+				iChamada.setIsPresente(true);
+			}else{
+				iChamada.setIsPresente(false);
+			}
 		}
 
 		return iChamada;
 	}
 
 	@GET
-	@Path("/aluno/{usuario}/posix/{x}/posiy/{y}")
+	@Path("aluno/{usuario}/posix/{x}/posiy/{y}")
 	@Produces(MediaType.APPLICATION_XML)
 	public Ticket ticket(@PathParam("usuario") String nameUsuario,
 			@PathParam("x") float posiX, @PathParam("y") float posiY) {

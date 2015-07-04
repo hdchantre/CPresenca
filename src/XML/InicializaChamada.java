@@ -8,6 +8,26 @@ public class InicializaChamada {
 
 	private boolean isInicializada;
 	private String causaDoProblema;
+	private Integer chamadaID;
+	private Boolean isPresente;
+	
+	@XmlElement(name = "isPresente")
+	public Boolean getIsPresente() {
+		return isPresente;
+	}
+
+	public void setIsPresente(Boolean isPresente) {
+		this.isPresente = isPresente;
+	}
+
+	@XmlElement(name = "chamdaID")
+	public Integer getChamadaID() {
+		return chamadaID;
+	}
+
+	public void setChamadaID(Integer chamadaID) {
+		this.chamadaID = chamadaID;
+	}
 
 	@XmlElement(name = "isInicializada")
 	public boolean isInicializada() {

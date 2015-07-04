@@ -28,9 +28,11 @@ public class AulaDAO {
 	private static final String DB_FINALIZA_CHAMADA = "update chamada set fim_aula = true where turma=?";
 	private static final String DB_GET_TURMA_PROFESSOR = "SELECT t.id, t.disciplina, d.nome FROM turma as t, disciplina as d WHERE datafim > CURRENT_TIMESTAMP and professor = (select id from usuario where usuario = ?) and t.disciplina = d.id";
 	private static final String DB_GET_TURMA_ALUNO = "SELECT t.id, t.disciplina, d.nome FROM turma as t, disciplina as d, turma_aluno as ta WHERE t.datafim > CURRENT_TIMESTAMP and ta.aluno = (select id from usuario where usuario = ?) and t.disciplina = d.id and ta.turma = t.id";
-	private static final String DB_ALUNO_EM_AULA = "insert into chamada_aluno(aluno_id, chamada_id, in_aula) values ((select id from usuario where usuario = ?),?,true)";
-	private static final String DB_VERIFICA_ALUNO_EM_AULA = "select * from chamada_aluno where aluno_id = (select id from usuario where usuario = ?) and in_aula = true";
+	private static final String DB_ALUNO_EM_AULA = "insert into chamada_aluno(aluno_id, chamada_id, in_aula, is_presente) values ((select id from usuario where usuario = ?),?,true, false)";
+	private static final String DB_VERIFICA_ALUNO_EM_AULA = "select ca.id from chamada_aluno as ca, chamada as c where aluno_id = (select id from usuario where usuario = ?) and in_aula = true and ca.chamada_id = c.id and c.fim_aula = false";
+	private static final String DB_VERIFICA_ALUNO_PRESENTE = "select is_presente from chamada_aluno where aluno_id = (select id from usuario where usuario = ?)  and chamada_id = ?";
 	private static final String DB_SAIR_AULA = "update chamada_aluno set in_aula = false where aluno_id = (select id from usuario where usuario = ?)";
+	private static final String DB_MARCAR_PRESENCA_ALUNO = "update chamada_aluno set is_presente = ? where aluno_id = ?";
 	private static final String DB_SALVAR_TICKET = "insert into ticket (aluno_id, chamada_id, posi_x, posi_y, data_ticket, hora_ticket) values ((select id from usuario where usuario = ?),?,?,?,?,?)";
 	private static final String DB_GET_TICKETS = "select t.*, u.nome, u.id as aid from ticket as t, usuario as u where chamada_id in (select id from chamada_aluno where chamada_id = ?) and t.aluno_id = u.id  order by aluno_id";
 	private static final String DB_GET_LISTA_ALUNO = "select t.*, u.nome from turma_aluno as t, usuario as u where turma=? and t.aluno = u.id  order by aluno";
@@ -105,19 +107,20 @@ public class AulaDAO {
 				while (rs.next()) {
 					turma = new Turma();
 					disciplina = new Disciplina();
-					
+
 					turma.setId(rs.getInt("id"));
 					turma.setChamadaAberta(false);
 					disciplina.setId(rs.getInt("disciplina"));
 					disciplina.setNome(rs.getString("nome"));
-					
-					ps = connection.prepareStatement(DB_VERIFICA_CHAMADA_ABERTA);
-					
+
+					ps = connection
+							.prepareStatement(DB_VERIFICA_CHAMADA_ABERTA);
+
 					ps.setInt(1, rs.getInt("id"));
-					
+
 					ResultSet rs2 = ps.executeQuery();
-					
-					if(rs2.next()){
+
+					if (rs2.next()) {
 						turma.setChamadaAberta(true);
 					}
 
@@ -160,19 +163,20 @@ public class AulaDAO {
 				while (rs.next()) {
 					turma = new Turma();
 					disciplina = new Disciplina();
-					
+
 					turma.setId(rs.getInt("id"));
 					turma.setChamadaAberta(false);
 					disciplina.setId(rs.getInt("disciplina"));
 					disciplina.setNome(rs.getString("nome"));
-					
-					ps = connection.prepareStatement(DB_VERIFICA_CHAMADA_ABERTA);
-					
+
+					ps = connection
+							.prepareStatement(DB_VERIFICA_CHAMADA_ABERTA);
+
 					ps.setInt(1, rs.getInt("id"));
-					
+
 					ResultSet rs2 = ps.executeQuery();
-					
-					if(rs2.next()){
+
+					if (rs2.next()) {
 						turma.setChamadaAberta(true);
 					}
 
@@ -247,6 +251,7 @@ public class AulaDAO {
 
 				if (ps.executeUpdate() > 0) {
 					chamada.setChamadaAberta(true);
+					chamada.setId(rs.getInt("id"));
 				}
 			}
 		} catch (SQLException e) {
@@ -266,20 +271,12 @@ public class AulaDAO {
 
 		PreparedStatement ps;
 		try {
-			ps = connection.prepareStatement(DB_VERIFICA_ALUNO_EM_AULA);
+			ps = connection.prepareStatement(DB_SAIR_AULA);
 
 			ps.setString(1, nomeUsuario);
 
-			ResultSet rs = ps.executeQuery();
-
-			if (rs.next()) {
-				ps = connection.prepareStatement(DB_SAIR_AULA);
-
-				ps.setString(1, nomeUsuario);
-
-				if (ps.executeUpdate() > 0) {
-					chamada.setChamadaAberta(false);
-				}
+			if (ps.executeUpdate() > 0) {
+				chamada.setChamadaAberta(false);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -326,6 +323,31 @@ public class AulaDAO {
 		mainDAO.fecharConexaoDB();
 
 		return chamada;
+	}
+
+	public boolean verificarPresencaAluno(Integer chamadaId, String nomeUsuario) {
+		boolean isPresente = false;
+		connection = mainDAO.conectarDB();
+
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(DB_VERIFICA_ALUNO_PRESENTE);
+
+			ps.setString(1, nomeUsuario);
+			ps.setInt(2, chamadaId);
+
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+				isPresente = rs.getBoolean("is_presente");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		mainDAO.fecharConexaoDB();
+
+		return isPresente;
 	}
 
 	public Chamada contabiliza(Integer idTurma) {
@@ -375,7 +397,7 @@ public class AulaDAO {
 					}
 					if (dataAula.equals(rs3.getDate("data_ticket"))) {
 						lista2.put(aluno, true);
-					}else{
+					} else {
 						lista2.put(aluno, true);
 					}
 				}
@@ -383,22 +405,43 @@ public class AulaDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		for(Aluno a : lista2.keySet()){
+
+		for (Aluno a : lista2.keySet()) {
 			lista.remove(a.getID());
 		}
-		
-		for(Integer id : lista.keySet()){
+
+		for (Integer id : lista.keySet()) {
 			aluno = new Aluno();
 			aluno.setID(id);
 			aluno.setNome(lista.get(id));
 			lista2.put(aluno, false);
 		}
-		
+
 		chamada.setAlunos(lista2);
 		mainDAO.fecharConexaoDB();
 
 		return chamada;
 	}
 
+	public void setPresencaAluno(Map<Aluno, Boolean> lista) {
+
+		connection = mainDAO.conectarDB();
+
+		PreparedStatement ps;
+
+		try {
+			for (Aluno aluno : lista.keySet()) {
+				ps = connection.prepareStatement(DB_MARCAR_PRESENCA_ALUNO);
+
+				ps.setBoolean(1, lista.get(aluno));
+				ps.setInt(2, aluno.getID());
+
+				ps.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		mainDAO.fecharConexaoDB();
+	}
 }

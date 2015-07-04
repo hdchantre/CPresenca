@@ -20,6 +20,7 @@ public class ControleAula implements AulaInterface {
 
 	public Chamada fecharAula(Integer idTurma) {
 		Chamada chamada = aulaDAO.contabiliza(idTurma);
+		aulaDAO.setPresencaAluno(chamada.getAlunos());
 		chamada.setChamadaAberta(aulaDAO.finalizaChamada(idTurma).getChamadaAberta());
 		return chamada;
 	}
@@ -47,8 +48,11 @@ public class ControleAula implements AulaInterface {
 	}
 
 	@Override
-	public Chamada ticket(String nomeUsuario, float posiX, float posiY) {
+	public Chamada ticket(String nomeUsuario, float posiX, float posiY) { 
 		return aulaDAO.ticketAluno(nomeUsuario, posiX, posiY);
 	}
 
+	public boolean verificarPresencaAluno(Integer chamadaid, String nomeUsuario){
+		return aulaDAO.verificarPresencaAluno(chamadaid, nomeUsuario);
+	}
 }
