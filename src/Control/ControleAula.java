@@ -14,8 +14,8 @@ public class ControleAula implements AulaInterface {
 	AulaDAO aulaDAO = new AulaDAO();
 	LoginDAO loginDAO = new LoginDAO();
 
-	public Chamada inicializaChamada(String nomeUsuario, Integer idTurma) {
-		return aulaDAO.inicializaChamada(nomeUsuario, idTurma);
+	public Chamada inicializaChamada(String nomeUsuario, Integer idTurma, float posix, float posiy) {
+		return aulaDAO.inicializaChamada(nomeUsuario, idTurma, posix, posiy);
 	}
 
 	public Chamada fecharAula(Integer idTurma) {

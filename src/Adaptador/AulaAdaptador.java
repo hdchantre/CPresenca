@@ -12,8 +12,8 @@ public class AulaAdaptador implements AulaInterface {
 	LoginAdaptador loginAdaptador = new LoginAdaptador();
 
 	@Override
-	public Chamada inicializaChamada(String nomeUsuario, Integer idTurma) {
-		return controleAula.inicializaChamada(nomeUsuario, idTurma);
+	public Chamada inicializaChamada(String nomeUsuario, Integer idTurma, float posix, float posiy) {
+		return controleAula.inicializaChamada(nomeUsuario, idTurma,posix,posiy);
 	}
 
 	@Override
@@ -48,10 +48,10 @@ public class AulaAdaptador implements AulaInterface {
 		loginAdaptador.tentarLogar("Eliane", "12345");
 
 		if (jaAberta) {
-			inicializaChamada("Eliane", 1);
+			inicializaChamada("Eliane", 1,1,1);
 		}
 
-		Chamada chamada = inicializaChamada(nomeUsuario, idTurma);
+		Chamada chamada = inicializaChamada(nomeUsuario, idTurma,1,1);
 
 		if (chamada != null && chamada.getChamadaAberta()) {
 			isInizializada = true;
@@ -73,7 +73,7 @@ public class AulaAdaptador implements AulaInterface {
 		loginAdaptador.tentarLogar("Eliane", "12345");
 
 		if (isAberta) {
-			inicializaChamada("Eliane", idTurma);
+			inicializaChamada("Eliane", idTurma,1,1);
 		}
 
 		Chamada chamada = fecharAula(idTurma);
@@ -96,7 +96,7 @@ public class AulaAdaptador implements AulaInterface {
 
 		if (isAberta) {
 			loginAdaptador.tentarLogar("Eliane", "12345");
-			inicializaChamada("Eliane", idTurma);
+			inicializaChamada("Eliane", idTurma,1,1);
 		}
 
 		Chamada chamada = checkAluno(nomeUsuario, idTurma);
@@ -120,7 +120,7 @@ public class AulaAdaptador implements AulaInterface {
 		boolean saiu = false;
 
 		loginAdaptador.tentarLogar("Eliane", "12345");
-		inicializaChamada("Eliane", 1);
+		inicializaChamada("Eliane", 1,1,1);
 		
 		loginAdaptador.tentarLogar("Joao", "12345");
 		checkAluno(nomeUsuario, 1);
@@ -145,7 +145,7 @@ public class AulaAdaptador implements AulaInterface {
 		
 		loginAdaptador.tentarLogar("Eliane", "12345");
 		
-		inicializaChamada("Eliane", 1);
+		inicializaChamada("Eliane", 1,1,1);
 		
 		loginAdaptador.tentarLogar(nomeUsuario, "12345");
 		

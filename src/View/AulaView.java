@@ -24,15 +24,16 @@ public class AulaView {
 	ControleAula controleAula = new ControleAula();
 
 	@GET
-	@Path("/usuario/{usuario}/turmaId/{id}")
+	@Path("/usuario/{usuario}/turmaId/{id}/posix/{x}/posiy/{y}")
 	@Produces(MediaType.APPLICATION_XML)
 	public InicializaChamada inicializaChamada(
 			@PathParam("usuario") String nameUsuario,
-			@PathParam("id") Integer idTurma) {
+			@PathParam("id") Integer idTurma, @PathParam("x") float posiX,
+			@PathParam("y") float posiY) {
 
 		InicializaChamada iChamada = new InicializaChamada();
 
-		Chamada chamada = controleAula.inicializaChamada(nameUsuario, idTurma);
+		Chamada chamada = controleAula.inicializaChamada(nameUsuario, idTurma,posiX,posiY);
 
 		if (chamada == null) {
 			iChamada.setInicializada(false);
@@ -142,9 +143,9 @@ public class AulaView {
 			iChamada.setCausaDoProblema("Continua em Aula");
 		} else {
 			iChamada.setInicializada(false);
-			if(controleAula.verificarPresencaAluno(chamadaId, nameUsuario)){
+			if (controleAula.verificarPresencaAluno(chamadaId, nameUsuario)) {
 				iChamada.setIsPresente(true);
-			}else{
+			} else {
 				iChamada.setIsPresente(false);
 			}
 		}

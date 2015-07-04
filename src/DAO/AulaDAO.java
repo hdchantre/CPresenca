@@ -24,7 +24,7 @@ public class AulaDAO {
 	Connection connection;
 
 	private static final String DB_VERIFICA_CHAMADA_ABERTA = "select * from chamada where turma = ? and fim_aula = false";
-	private static final String DB_INICIALIZA_CHAMADA = "insert into chamada (turma, data_chamada, hora_inicio, fim_aula) values (?,?,?,false)";
+	private static final String DB_INICIALIZA_CHAMADA = "insert into chamada (turma, data_chamada, hora_inicio, fim_aula, posi_x, posi_y) values (?,?,?,false,?,?)";
 	private static final String DB_FINALIZA_CHAMADA = "update chamada set fim_aula = true where turma=?";
 	private static final String DB_GET_TURMA_PROFESSOR = "SELECT t.id, t.disciplina, d.nome FROM turma as t, disciplina as d WHERE datafim > CURRENT_TIMESTAMP and professor = (select id from usuario where usuario = ?) and t.disciplina = d.id";
 	private static final String DB_GET_TURMA_ALUNO = "SELECT t.id, t.disciplina, d.nome FROM turma as t, disciplina as d, turma_aluno as ta WHERE t.datafim > CURRENT_TIMESTAMP and ta.aluno = (select id from usuario where usuario = ?) and t.disciplina = d.id and ta.turma = t.id";
@@ -37,7 +37,8 @@ public class AulaDAO {
 	private static final String DB_GET_TICKETS = "select t.*, u.nome, u.id as aid from ticket as t, usuario as u where chamada_id in (select id from chamada_aluno where chamada_id = ?) and t.aluno_id = u.id  order by aluno_id";
 	private static final String DB_GET_LISTA_ALUNO = "select t.*, u.nome from turma_aluno as t, usuario as u where turma=? and t.aluno = u.id  order by aluno";
 
-	public Chamada inicializaChamada(String nomeUsuario, Integer idTurma) {
+	public Chamada inicializaChamada(String nomeUsuario, Integer idTurma,
+			float posix, float posiy) {
 		Chamada chamada = new Chamada();
 		chamada.setChamadaAberta(false);
 
@@ -71,6 +72,8 @@ public class AulaDAO {
 				ps.setInt(1, idTurma);
 				ps.setDate(2, data);
 				ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+				ps.setDouble(4, posix);
+				ps.setDouble(5, posiy);
 
 				if (ps.executeUpdate() > 0) {
 					chamada.setChamadaAberta(true);
