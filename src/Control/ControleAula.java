@@ -17,9 +17,11 @@ public class ControleAula implements AulaInterface {
 	public Chamada inicializaChamada(String nomeUsuario, Integer idTurma) {
 		return aulaDAO.inicializaChamada(nomeUsuario, idTurma);
 	}
-	
+
 	public Chamada fecharAula(Integer idTurma) {
-		return aulaDAO.finalizaChamada(idTurma);
+		Chamada chamada = aulaDAO.contabiliza(idTurma);
+		chamada.setChamadaAberta(aulaDAO.finalizaChamada(idTurma).getChamadaAberta());
+		return chamada;
 	}
 
 	public List<Turma> getTurmas(String nomeUsuario, String tipo) {
@@ -45,8 +47,8 @@ public class ControleAula implements AulaInterface {
 	}
 
 	@Override
-	public boolean ticket(String nomeUsuario, float posiX, float posiY) {
-		return aulaDAO.ticketAluno(nomeUsuario, posiX, posiY).getChamadaAberta();
+	public Chamada ticket(String nomeUsuario, float posiX, float posiY) {
+		return aulaDAO.ticketAluno(nomeUsuario, posiX, posiY);
 	}
 
 }

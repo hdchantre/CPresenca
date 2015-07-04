@@ -37,7 +37,7 @@ public class AulaAdaptador implements AulaInterface {
 	}
 	
 	@Override
-	public boolean ticket(String nomeUsuario, float posiX, float posiY) {
+	public Chamada ticket(String nomeUsuario, float posiX, float posiY) {
 		return controleAula.ticket(nomeUsuario, posiX, posiY);
 	}
 
@@ -151,7 +151,7 @@ public class AulaAdaptador implements AulaInterface {
 		
 		checkAluno(nomeUsuario, 1);
 		
-		check = ticket(nomeUsuario, posix, posiy);
+		check = ticket(nomeUsuario, posix, posiy).getChamadaAberta();
 		
 		fecharAula(1);
 		loginAdaptador.tentarDeslogar("Eliane", "Professor");

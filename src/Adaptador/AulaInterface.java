@@ -17,6 +17,6 @@ public interface AulaInterface {
 	
 	public abstract Chamada checkOutAluno(String nomeUsuario);
 	
-	public abstract boolean ticket(String nomeUsuario, float posiX, float posiY);
+	public abstract Chamada ticket(String nomeUsuario, float posiX, float posiY);
 
 }

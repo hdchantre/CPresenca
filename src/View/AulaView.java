@@ -10,10 +10,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import Control.ControleAula;
+import Model.Aluno;
 import Model.Chamada;
 import Model.Turma;
 import XML.FinalizaChamada;
 import XML.InicializaChamada;
+import XML.Ticket;
 import XML.TurmaLogin;
 
 @Path("/aula")
@@ -77,20 +79,30 @@ public class AulaView {
 	@GET
 	@Path("/turmaId/{id}")
 	@Produces(MediaType.APPLICATION_XML)
-	public FinalizaChamada fecharChamada(@PathParam("id") Integer idTurma) {
+	public List<FinalizaChamada> fecharChamada(@PathParam("id") Integer idTurma) {
 
-		FinalizaChamada fChamada = new FinalizaChamada();
+		List<FinalizaChamada> fChamadaList = new ArrayList<FinalizaChamada>();
+
+		FinalizaChamada fChamada;
 
 		Chamada chamada = controleAula.fecharAula(idTurma);
 
 		if (chamada.getChamadaAberta()) {
-			fChamada.setFinalizada(true);
-			fChamada.setCausaDoProblema("Chamada continua aberta");
-		} else {
+			fChamada = new FinalizaChamada();
 			fChamada.setFinalizada(false);
+			fChamada.setCausaDoProblema("Chamada continua aberta");
+			fChamadaList.add(fChamada);
+		} else {
+			for (Aluno aluno : chamada.getAlunos().keySet()) {
+				fChamada = new FinalizaChamada();
+				fChamada.setFinalizada(true);
+				fChamada.setAluno(aluno.getNome());
+				fChamada.setPresenca(chamada.getAlunos().get(aluno));
+				fChamadaList.add(fChamada);
+			}
 		}
 
-		return fChamada;
+		return fChamadaList;
 	}
 
 	@GET
@@ -137,15 +149,22 @@ public class AulaView {
 	@GET
 	@Path("/aluno/{usuario}/posix/{x}/posiy/{y}")
 	@Produces(MediaType.APPLICATION_XML)
-	public Chamada ticket(@PathParam("usuario") String nameUsuario,
+	public Ticket ticket(@PathParam("usuario") String nameUsuario,
 			@PathParam("x") float posiX, @PathParam("y") float posiY) {
 
-		Chamada chamada = new Chamada();
+		Ticket ticket = new Ticket();
 
-		Boolean tudoCerto = controleAula.ticket(nameUsuario, posiX, posiY);
-		chamada.setChamadaAberta(tudoCerto);
+		Chamada chamada = controleAula.ticket(nameUsuario, posiX, posiY);
 
-		return chamada;
+		if (chamada.getChamadaAberta()) {
+			ticket.setTicketRecebido(true);
+			ticket.setFimAula(false);
+		} else {
+			ticket.setTicketRecebido(false);
+			ticket.setFimAula(true);
+		}
+
+		return ticket;
 	}
 
 }
