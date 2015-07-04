@@ -340,11 +340,11 @@ public class TestCasesAluno {
 			boolean isOk = presencaAdaptador.verificarPresencas("Joaooo", 1);
 
 			if (!isOk) {
-				fsmAluno.verificarPresencas();
 				assertEquals(true,
 						(fsmAluno.getState() == StatesAluno.logado.toString()));
 
 			} else
+				fsmAluno.verificarPresencas();
 				assertEquals(true,
 						(fsmAluno.getState() == StatesAluno.logado.toString()));
 
@@ -382,6 +382,7 @@ public class TestCasesAluno {
 						(fsmAluno.getState() == StatesAluno.logado.toString()));
 
 			} else
+				fsmAluno.setState("logado");
 				assertEquals(true,
 						(fsmAluno.getState() == StatesAluno.logado.toString()));
 
