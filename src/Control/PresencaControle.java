@@ -4,6 +4,7 @@ import java.util.List;
 
 import Adaptador.PresencaInterface;
 import DAO.PresencaDAO;
+import Model.Aluno;
 import Model.Presenca;
 
 public class PresencaControle implements PresencaInterface {
@@ -14,6 +15,10 @@ public class PresencaControle implements PresencaInterface {
 	public List<Presenca> verificarPresencaTurma(String nomeUsuario,
 			Integer idTurma) {
 		return presencaDAO.verificarPresencaTurma(nomeUsuario, idTurma);
+	}
+
+	public List<Aluno> getListaAlunoPorTurma(Integer idTurma) {
+		return presencaDAO.getListaAlunoPorTurma(idTurma);
 	}
 
 }

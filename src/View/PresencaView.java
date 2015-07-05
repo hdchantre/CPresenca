@@ -12,7 +12,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import Control.PresencaControle;
+import Model.Aluno;
 import Model.Presenca;
+import XML.AlunoTurma;
 import XML.PresencaTurma;
 
 @Path("/presenca")
@@ -29,19 +31,38 @@ public class PresencaView {
 
 		DateFormat outputFormatter = new SimpleDateFormat("MM/dd/yyyy");
 		String output;
-		
+
 		List<PresencaTurma> lista = new ArrayList<PresencaTurma>();
 		PresencaTurma presencaTurma;
-		
+
 		List<Presenca> presencaLista = presencaControle.verificarPresencaTurma(
 				nameUsuario, idTurma);
 
 		for (Presenca presenca : presencaLista) {
 			presencaTurma = new PresencaTurma();
-			output =  outputFormatter.format(presenca.getDiaChamada());
+			output = outputFormatter.format(presenca.getDiaChamada());
 			presencaTurma.setDiaChamada(output);
 			presencaTurma.setIsPresente(presenca.getIsPresente());
 			lista.add(presencaTurma);
+		}
+
+		return lista;
+	}
+
+	@GET
+	@Path("/turmaId/{id}")
+	@Produces(MediaType.APPLICATION_XML)
+	public List<AlunoTurma> getListaAlunoTurma(@PathParam("id") Integer idTurma) {
+		List<AlunoTurma> lista = new ArrayList<AlunoTurma>();
+		AlunoTurma alunoTurma;
+
+		List<Aluno> aluno = presencaControle.getListaAlunoPorTurma(idTurma);
+
+		for (Aluno a : aluno) {
+			alunoTurma = new AlunoTurma();
+			alunoTurma.setId(a.getID());
+			alunoTurma.setNome(a.getNome());
+			lista.add(alunoTurma);
 		}
 
 		return lista;
