@@ -24,8 +24,8 @@ public class AulaDAO {
 	Connection connection;
 
 	private static final String DB_VERIFICA_CHAMADA_ABERTA = "select * from chamada where turma = ? and fim_aula = false";
-	private static final String DB_INICIALIZA_CHAMADA = "insert into chamada (turma, data_chamada, hora_inicio, fim_aula, posi_x, posi_y) values (?,?,?,false,?,?)";
-	private static final String DB_FINALIZA_CHAMADA = "update chamada set fim_aula = true where turma=?";
+	private static final String DB_INICIALIZA_CHAMADA = "insert into chamada (turma, data_chamada, hora_inicio, fim_aula, posi_x, posi_y, por_presenca,tempo_ticket) values (?,?,?,false,?,?,?,?)";
+	private static final String DB_FINALIZA_CHAMADA = "update chamada set fim_aula = true, hora_fim = ? where turma=? and fim_aula = false";
 	private static final String DB_GET_TURMA_PROFESSOR = "SELECT t.id, t.disciplina, d.nome FROM turma as t, disciplina as d WHERE datafim > CURRENT_TIMESTAMP and professor = (select id from usuario where usuario = ?) and t.disciplina = d.id";
 	private static final String DB_GET_TURMA_ALUNO = "SELECT t.id, t.disciplina, d.nome FROM turma as t, disciplina as d, turma_aluno as ta WHERE t.datafim > CURRENT_TIMESTAMP and ta.aluno = (select id from usuario where usuario = ?) and t.disciplina = d.id and ta.turma = t.id";
 	private static final String DB_ALUNO_EM_AULA = "insert into chamada_aluno(aluno_id, chamada_id, in_aula, is_presente) values ((select id from usuario where usuario = ?),?,true, false)";
@@ -38,7 +38,7 @@ public class AulaDAO {
 	private static final String DB_GET_LISTA_ALUNO = "select t.*, u.nome from turma_aluno as t, usuario as u where turma=? and t.aluno = u.id  order by aluno";
 
 	public Chamada inicializaChamada(String nomeUsuario, Integer idTurma,
-			float posix, float posiy) {
+			float posix, float posiy, Integer porpre, Integer tempoTicket) {
 		Chamada chamada = new Chamada();
 		chamada.setChamadaAberta(false);
 
@@ -74,6 +74,8 @@ public class AulaDAO {
 				ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
 				ps.setDouble(4, posix);
 				ps.setDouble(5, posiy);
+				ps.setInt(6, porpre);
+				ps.setInt(7, tempoTicket);
 
 				if (ps.executeUpdate() > 0) {
 					chamada.setChamadaAberta(true);
@@ -217,7 +219,8 @@ public class AulaDAO {
 			if (rs.next()) {
 				ps = connection.prepareStatement(DB_FINALIZA_CHAMADA);
 
-				ps.setInt(1, idTurma);
+				ps.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
+				ps.setInt(2, idTurma);
 
 				if (ps.executeUpdate() > 0) {
 					chamada.setChamadaAberta(false);
@@ -358,7 +361,19 @@ public class AulaDAO {
 		Aluno aluno = new Aluno();
 		Map<Integer, String> lista = new HashMap<Integer, String>();
 		Map<Aluno, Boolean> lista2 = new HashMap<Aluno, Boolean>();
+		Map<Integer, Integer> listaTicket = new HashMap<Integer, Integer>();
 		Date dataAula = new Date();
+
+		int porPresenca = 75;
+		int tempoTicket = 5;
+
+		Timestamp fimAula = new Timestamp(System.currentTimeMillis());
+		int fimAulaHoras = fimAula.getHours();
+		int fimAulaMinutos = fimAula.getMinutes();
+
+		Timestamp inicioAula = new Timestamp(System.currentTimeMillis());
+		int inicioAulaHoras = inicioAula.getHours();
+		int inicioAulaMinutos = inicioAula.getMinutes();
 
 		connection = mainDAO.conectarDB();
 
@@ -372,6 +387,13 @@ public class AulaDAO {
 
 			if (rs.next()) {
 
+				porPresenca = rs.getInt("por_presenca");
+				tempoTicket = rs.getInt("tempo_ticket");
+
+				inicioAula = rs.getTimestamp("hora_inicio");
+				inicioAulaHoras = inicioAula.getHours();
+				inicioAulaMinutos = inicioAula.getMinutes();
+
 				ps = connection.prepareStatement(DB_GET_LISTA_ALUNO);
 
 				ps.setInt(1, idTurma);
@@ -380,6 +402,7 @@ public class AulaDAO {
 
 				while (rs2.next()) {
 					lista.put(rs2.getInt("aluno"), rs2.getString("nome"));
+					listaTicket.put(rs2.getInt("aluno"), 0);
 				}
 
 				aluno = new Aluno();
@@ -392,16 +415,10 @@ public class AulaDAO {
 				ResultSet rs3 = ps.executeQuery();
 
 				while (rs3.next()) {
-					if (aluno.getID() == null
-							|| aluno.getID() != rs3.getInt("aid")) {
-						aluno = new Aluno();
-						aluno.setID(rs3.getInt("aid"));
-						aluno.setNome(rs3.getString("nome"));
-					}
+					
 					if (dataAula.equals(rs3.getDate("data_ticket"))) {
-						lista2.put(aluno, true);
-					} else {
-						lista2.put(aluno, true);
+						listaTicket.put(rs3.getInt("aid"),
+								listaTicket.get(rs3.getInt("aid"))+1);
 					}
 				}
 			}
@@ -409,15 +426,21 @@ public class AulaDAO {
 			e.printStackTrace();
 		}
 
-		for (Aluno a : lista2.keySet()) {
-			lista.remove(a.getID());
-		}
+		int minDiferente = (60 - inicioAulaMinutos + fimAulaMinutos)
+				+ ((fimAulaHoras - inicioAulaHoras) * 60) - 60;
+		
+		int quantidadeTickets = ((minDiferente / tempoTicket) * porPresenca) / 100;
 
-		for (Integer id : lista.keySet()) {
+		for (Integer id : listaTicket.keySet()) {
 			aluno = new Aluno();
 			aluno.setID(id);
 			aluno.setNome(lista.get(id));
-			lista2.put(aluno, false);
+			if (listaTicket.get(id) == 0
+					|| listaTicket.get(id) < quantidadeTickets) {
+				lista2.put(aluno, false);
+			} else {
+				lista2.put(aluno, true);
+			}
 		}
 
 		chamada.setAlunos(lista2);

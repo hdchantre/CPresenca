@@ -8,5 +8,4 @@ public interface PresencaInterface {
 
 	public abstract List<Presenca> verificarPresencaTurma(String nomeUsuario,
 			Integer idTurma);
-
 }

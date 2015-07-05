@@ -47,4 +47,6 @@ public class PresencaAdaptador implements PresencaInterface {
 	{
 		return true;
 	}
+
+	
 }

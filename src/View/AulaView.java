@@ -24,16 +24,18 @@ public class AulaView {
 	ControleAula controleAula = new ControleAula();
 
 	@GET
-	@Path("/usuario/{usuario}/turmaId/{id}/posix/{x}/posiy/{y}")
+	@Path("/usuario/{usuario}/turmaId/{id}/posix/{x}/posiy/{y}/porpre/{porpre}/dura/{dura}")
 	@Produces(MediaType.APPLICATION_XML)
 	public InicializaChamada inicializaChamada(
 			@PathParam("usuario") String nameUsuario,
 			@PathParam("id") Integer idTurma, @PathParam("x") float posiX,
-			@PathParam("y") float posiY) {
+			@PathParam("y") float posiY, @PathParam("porpre") Integer porpre,
+			@PathParam("dura") Integer dura) {
 
 		InicializaChamada iChamada = new InicializaChamada();
 
-		Chamada chamada = controleAula.inicializaChamada(nameUsuario, idTurma,posiX,posiY);
+		Chamada chamada = controleAula.inicializaChamada(nameUsuario, idTurma,
+				posiX, posiY, porpre, dura);
 
 		if (chamada == null) {
 			iChamada.setInicializada(false);

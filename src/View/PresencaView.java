@@ -1,5 +1,6 @@
 package View;
 
+import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import Control.PresencaControle;
 import Model.Aluno;
 import Model.Presenca;
 import XML.AlunoTurma;
+import XML.ChamadaInfo;
 import XML.PresencaTurma;
 
 @Path("/presenca")

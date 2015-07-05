@@ -61,7 +61,7 @@ public class PresencaDAO {
 
 		return listaPresenca;
 	}
-	
+
 	public List<Aluno> getListaAlunoPorTurma(Integer turmaID) {
 		List<Aluno> listaAluno = new ArrayList<Aluno>();
 		Aluno aluno;

@@ -7,7 +7,7 @@ import Model.Turma;
 
 public interface AulaInterface {
 	
-	public abstract Chamada inicializaChamada(String nomeUsuario, Integer idTurma, float posix, float posiy);
+	public abstract Chamada inicializaChamada(String nomeUsuario, Integer idTurma, float posix, float posiy, Integer porpre, Integer tempoTicket);
 	
 	public abstract Chamada fecharAula(Integer idTurma);
 	
