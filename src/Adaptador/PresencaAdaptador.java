@@ -27,4 +27,24 @@ public class PresencaAdaptador implements PresencaInterface {
 	public boolean sairVerficarPresencas(String nomeAluno, int idTurma) {
 		return true;
 	}
+	
+	public boolean consultarLista (Integer idTurma)
+	{
+		return true;
+	}
+	
+	public boolean sairconsultarLista (Integer idTurma)
+	{
+		return true;
+	}
+	
+	public boolean configurar (Integer parametro)
+	{
+		return true;
+	}
+	
+	public boolean sairconfigurar ()
+	{
+		return true;
+	}
 }

@@ -7,9 +7,11 @@ import org.junit.Test;
 
 import Adaptador.AulaAdaptador;
 import Adaptador.LoginAdaptador;
+import Adaptador.PresencaAdaptador;
 
-import StateMachines.FSMServidor;
+import StateMachines.FSMProfessor;
 import StateMachines.StateServer;
+
 
 
 /**
@@ -20,15 +22,18 @@ import StateMachines.StateServer;
 public class TestCasesProfessor {
 
 	private LoginAdaptador loginAdaptador;
+	private PresencaAdaptador presencaAdaptador;
 	private AulaAdaptador auladaptador;
-	private FSMServidor fsmservidor;
+	private FSMProfessor fsmservidor;
 	
 
 	@Before
 	public void setUp() throws Exception {
 		loginAdaptador = new LoginAdaptador();
+		
+		presencaAdaptador = new PresencaAdaptador();
 
-		fsmservidor = new FSMServidor();
+		fsmservidor = new FSMProfessor();
 
 		auladaptador = new AulaAdaptador();
 
@@ -198,7 +203,7 @@ public class TestCasesProfessor {
 		boolean isInicializada = auladaptador.inicializaChamada("Eliane", 1, false);
 
 		if (isInicializada) {
-			fsmservidor.entrarEmAula();
+			fsmservidor.entrarEmAula_PassarLocalizacao();
 			assertEquals(true,
 					(fsmservidor.getState() == StateServer.emAula.toString()));
 
@@ -270,4 +275,77 @@ public class TestCasesProfessor {
 					(fsmservidor.getState() == StateServer.logado.toString()));
 
 	}
+	
+	@Test
+	public void consultarListaPresenca() {
+
+		fsmservidor.setState("logado");
+		
+		boolean isOK = presencaAdaptador.consultarLista(1);
+
+		if (isOK) {
+			fsmservidor.consultarLista();
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.verificandoLista.toString()));
+
+		} else
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.verificandoLista.toString()));
+
+	}
+	
+	@Test
+	public void sairconsultarListaPresenca() {
+
+		fsmservidor.setState("verificandoLista");
+		
+		boolean isOK = presencaAdaptador.sairconsultarLista(1);
+
+		if (isOK) {
+			fsmservidor.sairconsultarLista();
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.logado.toString()));
+
+		} else
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.logado.toString()));
+
+	}
+	
+	@Test
+	public void configurarParametro() {
+
+		fsmservidor.setState("logado");
+		
+		boolean isOK = presencaAdaptador.configurar(1);
+
+		if (isOK) {
+			fsmservidor.configurar();
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.configurandoParametro.toString()));
+
+		} else
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.configurandoParametro.toString()));
+
+	}
+	
+	@Test
+	public void sairconfigurarParametro() {
+
+		fsmservidor.setState("configurandoParametro");
+		
+		boolean isOK = presencaAdaptador.sairconfigurar();
+
+		if (isOK) {
+			fsmservidor.sairConfigurar();
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.logado.toString()));
+
+		} else
+			assertEquals(true,
+					(fsmservidor.getState() == StateServer.logado.toString()));
+
+	}
+	
 }
