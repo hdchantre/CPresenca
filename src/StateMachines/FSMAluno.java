@@ -35,6 +35,7 @@ public class FSMAluno implements FsmModel{
 
 		}
 
+		//H11
 		// Ação
 		// "Após logar o aluno estra passa pro estado logado"
 		public @Action
@@ -66,6 +67,7 @@ public class FSMAluno implements FsmModel{
 			return state.equals(StatesAluno.logado.toString());
 		}
 
+		//H12
 		// Ação
 		// "Após efetuar logout o aluno fica em estado inativo."
 		public @Action
@@ -80,6 +82,7 @@ public class FSMAluno implements FsmModel{
 			return state.equals(StatesAluno.logado.toString());
 		}
 
+		//H4
 		public @Action
 		void entrarEmAula() {
 			System.out.println("entrarEmAula: " + state + " --> "
@@ -92,6 +95,7 @@ public class FSMAluno implements FsmModel{
 			return state.equals(StatesAluno.logado.toString());
 		}
 
+		//H17
 		public @Action
 		void verificarPresencas() {
 			System.out.println("verificacaoPresencas: " + state + " --> "
@@ -140,6 +144,7 @@ public class FSMAluno implements FsmModel{
 			return state.equals(StatesAluno.emAula.toString());
 		}
 
+		//H8
 		public @Action
 		void enviarTicket() {
 			System.out.println("enviarTicket: " + state + " --> "
@@ -152,6 +157,7 @@ public class FSMAluno implements FsmModel{
 			return state.equals(StatesAluno.emAula.toString());
 		}
 
+		// sem historia
 		public @Action
 		void sairdaAula() {
 			System.out.println("sairdaAula: " + state + " --> "

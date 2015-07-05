@@ -23,6 +23,7 @@ public class AulaView {
 
 	ControleAula controleAula = new ControleAula();
 
+	//H4
 	@GET
 	@Path("/usuario/{usuario}/turmaId/{id}/posix/{x}/posiy/{y}/porpre/{porpre}/dura/{dura}")
 	@Produces(MediaType.APPLICATION_XML)
@@ -50,6 +51,7 @@ public class AulaView {
 		return iChamada;
 	}
 
+	//Sem historia
 	@GET
 	@Path("/usuario/{usuario}/tipo/{tipo}")
 	@Produces(MediaType.APPLICATION_XML)
@@ -79,6 +81,7 @@ public class AulaView {
 		return turmasLogin;
 	}
 
+	//H5
 	@GET
 	@Path("/turmaId/{id}")
 	@Produces(MediaType.APPLICATION_XML)
@@ -108,6 +111,7 @@ public class AulaView {
 		return fChamadaList;
 	}
 
+	//H6
 	@GET
 	@Path("/aluno/{usuario}/turmaId/{id}")
 	@Produces(MediaType.APPLICATION_XML)
@@ -130,6 +134,7 @@ public class AulaView {
 		return iChamada;
 	}
 
+	//Aux-H6
 	@GET
 	@Path("/aluno/{usuario}/chamada/{id}")
 	@Produces(MediaType.APPLICATION_XML)
@@ -155,6 +160,7 @@ public class AulaView {
 		return iChamada;
 	}
 
+	//H8
 	@GET
 	@Path("aluno/{usuario}/posix/{x}/posiy/{y}")
 	@Produces(MediaType.APPLICATION_XML)

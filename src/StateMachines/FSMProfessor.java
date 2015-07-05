@@ -35,6 +35,7 @@ public class FSMProfessor implements FsmModel {
 
 	}
 
+	//H13
 	// Ação
 	// "Após logar o professor estra passa pro estado logado"
 	public @Action
@@ -65,6 +66,7 @@ public class FSMProfessor implements FsmModel {
 		return state.equals(StateServer.logado.toString());
 	}
 
+	//H14
 	// Ação
 	// "Após efetuar logout o aluno fica em estado inativo."
 	public @Action
@@ -115,6 +117,7 @@ public class FSMProfessor implements FsmModel {
 		return state.equals(StateServer.logado.toString());
 	}
 
+	//H19
 	public @Action
 	void entrarEmAula_PassarLocalizacao() {
 		System.out.println("entrarEmAula: " + state + " --> "
@@ -151,6 +154,7 @@ public class FSMProfessor implements FsmModel {
 		return state.equals(StateServer.logado.toString());
 	}
 
+	//H15
 	public @Action
 	void consultarLista() {
 		System.out.println("verificandoListPresenca: " + state + " --> "
@@ -163,6 +167,7 @@ public class FSMProfessor implements FsmModel {
 		return state.equals(StateServer.verificandoLista.toString());
 	}
 
+	//aux em H15
 	public @Action
 	void sairconsultarLista() {
 		System.out.println("sairconsultaListPresenca: " + state + " --> "
@@ -187,6 +192,7 @@ public class FSMProfessor implements FsmModel {
 		return state.equals(StateServer.emAula.toString());
 	}
 
+	//H5
 	public @Action
 	void sairdaAula() {
 		System.out.println("sairdaAula: " + state + " --> "

@@ -7,16 +7,19 @@ public class LoginAdaptador implements LoginInterface {
 
 	ControleLogin controleLogin = new ControleLogin();
 
+	//H11 e H13
 	@Override
 	public Usuario tentarLogar(String nomeUsuario, String senha) {
 		return controleLogin.tentarLogar(nomeUsuario, senha);
 	}
-
+	
+	//H12 e H14
 	@Override
 	public Usuario tentarDeslogar(String nomeUsuario, String tipo) {
 		return controleLogin.tentarDeslogar(nomeUsuario, tipo);
 	}
 
+	//H11 e H13
 	public boolean tentarLogar(String nomeUsuario, String senha, String tipo) {
 		boolean isLogado = false;
 		Usuario usuario = tentarLogar(nomeUsuario, senha);
@@ -36,6 +39,7 @@ public class LoginAdaptador implements LoginInterface {
 		return isLogado;
 	}
 	
+	//H12 e H14
 	public boolean tentarDeslogarProfessor(String nomeUsuario, String tipo, boolean isLogado){
 		boolean deslogado = false;
 		
@@ -61,6 +65,7 @@ public class LoginAdaptador implements LoginInterface {
 		return deslogado;
 	}
 	
+	//H11 e H13
 	public boolean tentarDeslogarAluno(String nomeUsuario, String tipo, boolean isLogado){
 		boolean deslogado = false;
 		

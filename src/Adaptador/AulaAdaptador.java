@@ -11,36 +11,43 @@ public class AulaAdaptador implements AulaInterface {
 	ControleAula controleAula = new ControleAula();
 	LoginAdaptador loginAdaptador = new LoginAdaptador();
 
-	@Override
+	//H4
+	@Override 
 	public Chamada inicializaChamada(String nomeUsuario, Integer idTurma, float posix, float posiy, Integer porpre, Integer tempoTicket) {
 		return controleAula.inicializaChamada(nomeUsuario, idTurma,posix,posiy, porpre, tempoTicket);
 	}
 
+	//H5
 	@Override
 	public Chamada fecharAula(Integer idTurma) {
 		return controleAula.fecharAula(idTurma);
 	}
 
+	//??? Acho que não esta em nenhuma historia
 	@Override
 	public List<Turma> getTurmas(String nomeUsuario, String tipo) {
 		return controleAula.getTurmas(nomeUsuario, tipo);
 	}
 
+	//H6
 	@Override
 	public Chamada checkAluno(String nomeUsuario, Integer idTurma) {
 		return controleAula.checkAluno(nomeUsuario, idTurma);
 	}
 
+	//Pode ser H12, mas acho que H12 é sair do sistema, então essa não é nenhuma historia
 	@Override
 	public Chamada checkOutAluno(String nomeUsuario) {
 		return controleAula.checkOutAluno(nomeUsuario);
 	}
 	
+	//H8
 	@Override
 	public Chamada ticket(String nomeUsuario, float posiX, float posiY) {
 		return controleAula.ticket(nomeUsuario, posiX, posiY);
 	}
 
+	//H4
 	public boolean inicializaChamada(String nomeUsuario, Integer idTurma,
 			boolean jaAberta) {
 		boolean isInizializada = false;
@@ -67,6 +74,7 @@ public class AulaAdaptador implements AulaInterface {
 		return isInizializada;
 	}
 
+	//H5
 	public boolean fecharAula(Integer idTurma, boolean isAberta) {
 		boolean isFechada = false;
 
@@ -88,6 +96,7 @@ public class AulaAdaptador implements AulaInterface {
 		return isFechada;
 	}
 
+	//H6
 	public boolean entrarEmAula(String nomeUsuario, Integer idTurma,
 			boolean isAberta) {
 		boolean entrou = false;
@@ -116,6 +125,7 @@ public class AulaAdaptador implements AulaInterface {
 		return entrou;
 	}
 
+	//H12 eu acho, mas H12 pode ser sair do sistema!?!?
 	public boolean sairDaAula(String nomeUsuario) {
 		boolean saiu = false;
 
@@ -139,6 +149,7 @@ public class AulaAdaptador implements AulaInterface {
 		return saiu;
 	}
 	
+	//H8
 	public boolean enviarTicket(String nomeUsuario, float posix, float posiy)
 	{
 		Boolean check = false;

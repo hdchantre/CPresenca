@@ -37,6 +37,7 @@ public class AulaDAO {
 	private static final String DB_GET_TICKETS = "select t.*, u.nome, u.id as aid from ticket as t, usuario as u where chamada_id in (select id from chamada_aluno where chamada_id = ?) and t.aluno_id = u.id  order by aluno_id";
 	private static final String DB_GET_LISTA_ALUNO = "select t.*, u.nome from turma_aluno as t, usuario as u where turma=? and t.aluno = u.id  order by aluno";
 
+	//H4
 	public Chamada inicializaChamada(String nomeUsuario, Integer idTurma,
 			float posix, float posiy, Integer porpre, Integer tempoTicket) {
 		Chamada chamada = new Chamada();
@@ -90,6 +91,7 @@ public class AulaDAO {
 		return chamada;
 	}
 
+	//H -sem história
 	public List<Turma> getTurmasProfessor(String nomeUsuario) {
 
 		List<Turma> turmas = new ArrayList<Turma>();
@@ -146,6 +148,7 @@ public class AulaDAO {
 		return turmas;
 	}
 
+	
 	public List<Turma> getTurmasAluno(String nomeUsuario) {
 
 		List<Turma> turmas = new ArrayList<Turma>();
@@ -202,6 +205,7 @@ public class AulaDAO {
 		return turmas;
 	}
 
+	//H5
 	public Chamada finalizaChamada(Integer idTurma) {
 		Chamada chamada = new Chamada();
 		chamada.setChamadaAberta(true);
@@ -235,6 +239,7 @@ public class AulaDAO {
 		return chamada;
 	}
 
+	//H6
 	public Chamada checkAluno(String nomeUsuario, Integer idTurma) {
 		Chamada chamada = new Chamada();
 		chamada.setChamadaAberta(false);
@@ -269,6 +274,7 @@ public class AulaDAO {
 		return chamada;
 	}
 
+	//H - sem historia
 	public Chamada checkOutAluno(String nomeUsuario) {
 		Chamada chamada = new Chamada();
 		chamada.setChamadaAberta(true);
@@ -293,6 +299,7 @@ public class AulaDAO {
 		return chamada;
 	}
 
+	//H8
 	public Chamada ticketAluno(String nomeUsuario, float posiX, float posiY) {
 		Chamada chamada = new Chamada();
 		chamada.setChamadaAberta(false);
@@ -331,6 +338,7 @@ public class AulaDAO {
 		return chamada;
 	}
 
+	//H1 e H17
 	public boolean verificarPresencaAluno(Integer chamadaId, String nomeUsuario) {
 		boolean isPresente = false;
 		connection = mainDAO.conectarDB();
@@ -356,6 +364,8 @@ public class AulaDAO {
 		return isPresente;
 	}
 
+	//Não representa uma historia em especifico, mas faz parte de várias
+	//H8,  h17 e H15
 	public Chamada contabiliza(Integer idTurma) {
 		Chamada chamada = new Chamada();
 		Aluno aluno = new Aluno();
@@ -449,6 +459,7 @@ public class AulaDAO {
 		return chamada;
 	}
 
+	//H7 - não está em nenhuma sprint
 	public void setPresencaAluno(Map<Aluno, Boolean> lista) {
 
 		connection = mainDAO.conectarDB();
