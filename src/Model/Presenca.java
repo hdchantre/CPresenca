@@ -10,6 +10,7 @@ public class Presenca {
 	private Timestamp horaFim;
 	private Timestamp horaInicio;
 	private Integer porPresenca;
+	
 
 	public Timestamp getHoraInicio() {
 		return horaInicio;
