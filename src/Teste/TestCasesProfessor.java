@@ -312,7 +312,7 @@ public class TestCasesProfessor {
 
 	}
 	
-	@Test
+	/*@Test
 	public void configurarParametro() {
 
 		fsmservidor.setState("logado");
@@ -346,6 +346,6 @@ public class TestCasesProfessor {
 			assertEquals(true,
 					(fsmservidor.getState() == StateServer.logado.toString()));
 
-	}
+	}*/
 	
 }

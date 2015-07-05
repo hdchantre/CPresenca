@@ -123,7 +123,7 @@ public class FSMProfessor implements FsmModel {
 
 	}
 
-	public boolean configurarGuard() {
+	/*public boolean configurarGuard() {
 		return state.equals(StateServer.logado.toString());
 	}
 
@@ -145,7 +145,7 @@ public class FSMProfessor implements FsmModel {
 				+ StateServer.logado.toString());
 		state = StateServer.logado.toString();
 
-	}
+	}*/
 
 	public boolean consultarListaGuard() {
 		return state.equals(StateServer.logado.toString());
