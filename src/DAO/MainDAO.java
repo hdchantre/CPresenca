@@ -8,6 +8,7 @@ public class MainDAO {
 	
 	private Connection connection;
 	
+	//Conecta ao banco - sem historia
 	public Connection conectarDB(){
 		
 		try {
@@ -19,8 +20,8 @@ public class MainDAO {
 
 		try {
 			connection = DriverManager.getConnection(
-					"jdbc:postgresql://localhost:5433/projeto", "postgres",
-					"jesik846213");
+					"jdbc:postgresql://localhost:5432/projeto", "postgres",
+					"123456");
 		} catch (SQLException e) {
 			System.out.println("Connection Failed");
 			e.printStackTrace();
@@ -29,6 +30,7 @@ public class MainDAO {
 		return connection;
 	}
 	
+	// fecha conexão - sem historia
 	public void fecharConexaoDB(){
 		try {
 			connection.close();

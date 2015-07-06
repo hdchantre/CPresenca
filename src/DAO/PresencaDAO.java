@@ -21,6 +21,7 @@ public class PresencaDAO {
 	private static final String DB_VERIFICA_ALUNO_PRESENTE = "select is_presente from chamada_aluno where aluno_id = (select id from usuario where usuario = ?)  and chamada_id = ?";
 	private static final String DB_GET_LISTA_ALUNO_TURMA = "select nome, id, usuario from usuario where id in (select aluno from turma_aluno where turma=?)";
 
+	//Auxiliar em H23
 	public List<Presenca> verificarPresencaTurma(String usuario, Integer turmaID) {
 		List<Presenca> listaPresenca = new ArrayList<Presenca>();
 		Presenca presenca;
@@ -61,7 +62,9 @@ public class PresencaDAO {
 
 		return listaPresenca;
 	}
+	
 
+	//H15 e H17
 	public List<Aluno> getListaAlunoPorTurma(Integer turmaID) {
 		List<Aluno> listaAluno = new ArrayList<Aluno>();
 		Aluno aluno;

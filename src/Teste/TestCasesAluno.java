@@ -1,3 +1,5 @@
+
+
 package Teste;
 
 import static org.junit.Assert.assertEquals;
@@ -11,6 +13,11 @@ import Adaptador.PresencaAdaptador;
 import StateMachines.FSMAluno;
 import StateMachines.StateServer;
 import StateMachines.StatesAluno;
+
+/**
+ * @author Priscila Moraes Ioris
+ * 
+ */
 
 public class TestCasesAluno {
 
@@ -32,6 +39,7 @@ public class TestCasesAluno {
 
 		}
 
+		//H11
 		@Test
 		public void logarValidoAluno() {
 			fsmAluno.getState();
@@ -49,6 +57,7 @@ public class TestCasesAluno {
 						(fsmAluno.getState() == StatesAluno.logado.toString()));
 		}
 
+		//H11
 		@Test
 		public void logarUsuarioInvalidoAluno() {
 
@@ -69,6 +78,7 @@ public class TestCasesAluno {
 
 		}
 
+		//H11
 		
 		@Test
 		public void senhaInvalidaAluno() {
@@ -89,7 +99,7 @@ public class TestCasesAluno {
 			}
 		}
 
-		
+		//H11
 		@Test
 		public void senha_ID_Invalida_Aluno() {
 
@@ -109,6 +119,7 @@ public class TestCasesAluno {
 			}
 		}
 		
+		//H12
 		@Test
 		public void deslogarValidoAluno() {
 
@@ -127,6 +138,7 @@ public class TestCasesAluno {
 			}
 		}
 		
+		//H12 
 		@Test
 		public void deslogarJaDeslogadoAluno() {
 
@@ -146,6 +158,7 @@ public class TestCasesAluno {
 			}
 		}
 		
+		//H12
 		@Test
 		public void deslogarUsarioInvalidoAluno() {
 
@@ -165,6 +178,7 @@ public class TestCasesAluno {
 			}
 		}
 		
+		//Viagem do João - H11
 		@Test
 		public void deslogarJaDeslogadoUsuarioInvalidoAluno() {
 
@@ -185,6 +199,7 @@ public class TestCasesAluno {
 		}
 		
 
+		//H6
 		@Test
 		public void entrarEmAulaValido() {
 
@@ -203,6 +218,7 @@ public class TestCasesAluno {
 
 		}	
 		
+		//H6
 		@Test
 		public void entrarEmAulaTurmaInvalida() {
 
@@ -221,6 +237,7 @@ public class TestCasesAluno {
 
 		}
 		
+		//H6
 		@Test
 		public void entrarEmAulaUsuarioInvalido() {
 
@@ -239,6 +256,7 @@ public class TestCasesAluno {
 
 		}
 		
+		//H6
 		@Test
 		public void entrarEmAulaUsuarioETurmaInvalidos() {
 
@@ -257,7 +275,7 @@ public class TestCasesAluno {
 
 		}
 
-		
+		//Aux - H6 -  na verdade nao tem historia para aluno saindo de aula
 		@Test
 		public void sairDaAulaValido() {
 
@@ -276,7 +294,7 @@ public class TestCasesAluno {
 
 		}
 		
-		
+		//Aux - H6
 		@Test
 		public void sairDaAulaUsuarioInvalido() {
 
@@ -295,6 +313,7 @@ public class TestCasesAluno {
 
 		}
 		
+		//H8
 		@Test
 		public void enviarTicket() {
 
@@ -313,6 +332,7 @@ public class TestCasesAluno {
 
 		}
 		
+		//H17
 		@Test
 		public void verificarPresencasValido() {
 
@@ -330,45 +350,9 @@ public class TestCasesAluno {
 						(fsmAluno.getState() == StatesAluno.verificandoPresenca.toString()));
 
 		}
+
 		
-		//Não precisa
-		@Test
-		public void verificarPresencasNomeInvalido() {
-
-			fsmAluno.setState("logado");
-
-			boolean isOk = presencaAdaptador.verificarPresencas("Joaooo", 1);
-
-			if (!isOk) {
-				assertEquals(true,
-						(fsmAluno.getState() == StatesAluno.logado.toString()));
-
-			} else
-				fsmAluno.verificarPresencas();
-				assertEquals(true,
-						(fsmAluno.getState() == StatesAluno.logado.toString()));
-
-		}
-		
-		//Não precisa
-		@Test
-		public void verificarPresencasTurmaInvalida() {
-
-			fsmAluno.setState("logado");
-
-			boolean isOk = presencaAdaptador.verificarPresencas("Joao", 20);
-
-			if (!isOk) {
-				fsmAluno.verificarPresencas();
-				assertEquals(true,
-						(fsmAluno.getState() == StatesAluno.logado.toString()));
-
-			} else
-				assertEquals(true,
-						(fsmAluno.getState() == StatesAluno.logado.toString()));
-
-		}
-		
+		//Aux H17
 		@Test
 		public void sairVerificarPresencasValido() {
 
@@ -388,6 +372,8 @@ public class TestCasesAluno {
 
 		}
 		
+
+		/*
 		@Test
 		public void sairVerificarPresencasTurmaInvalida() {
 
@@ -424,7 +410,47 @@ public class TestCasesAluno {
 
 		}
 		
+		/*
+		//Não precisa
+		@Test  
+		public void verificarPresencasNomeInvalido() {
 
-	}
+			fsmAluno.setState("logado");
+
+			boolean isOk = presencaAdaptador.verificarPresencas("Joaooo", 1);
+
+			if (!isOk) {
+				assertEquals(true,
+						(fsmAluno.getState() == StatesAluno.logado.toString()));
+
+			} else
+				fsmAluno.verificarPresencas();
+				assertEquals(true,
+						(fsmAluno.getState() == StatesAluno.logado.toString()));
+
+		}
+		
+		//Não precisa
+		@Test
+		public void verificarPresencasTurmaInvalida() {
+
+			fsmAluno.setState("logado");
+
+			boolean isOk = presencaAdaptador.verificarPresencas("Joao", 20);
+
+			if (!isOk) {
+				fsmAluno.verificarPresencas();
+				assertEquals(true,
+						(fsmAluno.getState() == StatesAluno.logado.toString()));
+
+			} else
+				assertEquals(true,
+						(fsmAluno.getState() == StatesAluno.logado.toString()));
+
+		}*/
+
+
+
+}
 
 

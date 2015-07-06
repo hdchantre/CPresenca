@@ -20,6 +20,7 @@ public class LoginDAO {
 	private static final String DB_UPDATE_USUARIO_LOGADO = "update usuario set islogado = true, chave = ? where usuario=? and senha=?";
 	private static final String DB_SAIR = "update usuario set islogado = false, chave = null  where usuario=?";
 
+	//H11 e H13
 	public Usuario tentarLogar(String nomeUsuario, String senha) {
 
 		Usuario usuario = new Usuario();
@@ -73,6 +74,7 @@ public class LoginDAO {
 		return usuario;
 	}
 
+	// H12 e H14
 	public Usuario tentarDeslogar(String nomeUsuario, String tipo) {
 
 		Usuario usuario = new Usuario();

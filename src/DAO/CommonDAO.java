@@ -16,6 +16,8 @@ public class CommonDAO {
 	private static final String DB_VERIFICA_CHAMADA_ABERTA_PROFESSOR = "select c.fim_aula from chamada as c where c.turma in (select t.id from turma as t, usuario as u where t.professor = u.id and u.usuario = ?)";
 	private static final String DB_VARIFICA_CHAMADA_ABERTA_ALUNO = "select c.fim_aula from chamada as c where c.turma in (select t.id from turma_aluno as t, usuario as u where t.aluno = u.id and u.usuario = ?)";
 
+	//Auxiliar nas historias
+	//H11 e H13
 	public String isUsuarioLogado(String nomeUsuario) {
 
 		String estado = "Usuario Errado";
@@ -48,6 +50,8 @@ public class CommonDAO {
 		return estado;
 	}
 
+	//Auxiliar nas historias
+	//H4, H5
 	public boolean verificaChamadaAbertaProfessor(String usuario) {
 
 		boolean isAberta = false;
@@ -76,7 +80,8 @@ public class CommonDAO {
 
 		return isAberta;
 	}
-
+	
+	//auxiliar na historia - H6
 	public boolean verificaChamadaAbertaAluno(String usuario) {
 
 		boolean isAberta = false;
@@ -105,6 +110,7 @@ public class CommonDAO {
 		return isAberta;
 	}
 	
+	// Sem historia
 	public boolean isProfessor(String nomeUsuario) {
 
 		boolean isProfessor = false;

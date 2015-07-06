@@ -39,6 +39,7 @@ public class TestCasesProfessor {
 
 	}
 
+	//H13
 	@Test
 	public void logarValidoProfessor() {
 		fsmservidor.getState();
@@ -57,6 +58,7 @@ public class TestCasesProfessor {
 	}
 
 
+	//H13
 	@Test
 	public void logarUsuarioInvalidoProfessor() {
 
@@ -77,6 +79,7 @@ public class TestCasesProfessor {
 
 	}
 
+	//H13
 	@Test
 	public void senhaInvalidaProfessor() {
 
@@ -96,7 +99,7 @@ public class TestCasesProfessor {
 		}
 	}
 	
-
+	//H13
 	@Test
 	public void senha_ID_Invalida_Professor() {
 
@@ -116,7 +119,7 @@ public class TestCasesProfessor {
 		}
 	}
 	
-	
+	//H14
 	@Test
 	public void deslogarValidoProfessor() {
 
@@ -136,6 +139,7 @@ public class TestCasesProfessor {
 		}
 	}
 	
+	//H14
 	@Test
 	public void deslogarJaDeslogadoProfessor() {
 
@@ -155,6 +159,7 @@ public class TestCasesProfessor {
 		}
 	}
 	
+	//H14
 	@Test
 	public void deslogarUsarioInvalidoProfessor() {
 
@@ -174,6 +179,7 @@ public class TestCasesProfessor {
 		}
 	}
 	
+	//Viagem do João - H14
 	@Test
 	public void deslogarJaDeslogadoUsuarioInvalidoProfessor() {
 
@@ -194,7 +200,7 @@ public class TestCasesProfessor {
 	}
 	
 	
-
+	//H4
 	@Test
 	public void abrirSessaoDaAula() {
 
@@ -213,6 +219,7 @@ public class TestCasesProfessor {
 
 	}
 
+	//Aux - H4
 	@Test
 	public void abrirSessaoJaAberta() {
 
@@ -227,6 +234,7 @@ public class TestCasesProfessor {
 
 	}
 	
+	//H4
 	@Test
 	public void abrirSessaoTurmaIdErrada() {
 
@@ -241,6 +249,7 @@ public class TestCasesProfessor {
 		}
 	}
 	
+	//H5
 	@Test
 	public void fecharSessaoDaAula() {
 
@@ -259,6 +268,7 @@ public class TestCasesProfessor {
 
 	}
 	
+	//H5
 	@Test
 	public void fecharSessaoDaAulaJaFechada() {
 
@@ -276,6 +286,7 @@ public class TestCasesProfessor {
 
 	}
 	
+	//H23
 	@Test
 	public void consultarListaPresenca() {
 
@@ -294,6 +305,7 @@ public class TestCasesProfessor {
 
 	}
 	
+	//H23
 	@Test
 	public void sairconsultarListaPresenca() {
 
@@ -312,7 +324,9 @@ public class TestCasesProfessor {
 
 	}
 	
-	@Test
+	//H9
+	/*@Test
+	
 	public void configurarParametro() {
 
 		fsmservidor.setState("logado");
@@ -330,6 +344,7 @@ public class TestCasesProfessor {
 
 	}
 	
+	//H9
 	@Test
 	public void sairconfigurarParametro() {
 
@@ -346,6 +361,6 @@ public class TestCasesProfessor {
 			assertEquals(true,
 					(fsmservidor.getState() == StateServer.logado.toString()));
 
-	}
+	}*/
 	
 }
