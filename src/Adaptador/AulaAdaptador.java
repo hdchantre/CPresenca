@@ -125,7 +125,7 @@ public class AulaAdaptador implements AulaInterface {
 		return entrou;
 	}
 
-	//H12 eu acho, mas H12 pode ser sair do sistema!?!?
+	//Não tem Historia
 	public boolean sairDaAula(String nomeUsuario) {
 		boolean saiu = false;
 

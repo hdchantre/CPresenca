@@ -286,7 +286,7 @@ public class TestCasesProfessor {
 
 	}
 	
-	//H23
+	//H15 e H23
 	@Test
 	public void consultarListaPresenca() {
 
@@ -305,7 +305,7 @@ public class TestCasesProfessor {
 
 	}
 	
-	//H23
+	//H15 e H23
 	@Test
 	public void sairconsultarListaPresenca() {
 

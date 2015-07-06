@@ -338,7 +338,7 @@ public class AulaDAO {
 		return chamada;
 	}
 
-	//H1 e H17
+	//H15 e H17
 	public boolean verificarPresencaAluno(Integer chamadaId, String nomeUsuario) {
 		boolean isPresente = false;
 		connection = mainDAO.conectarDB();
