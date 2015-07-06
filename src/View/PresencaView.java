@@ -64,6 +64,7 @@ public class PresencaView {
 			alunoTurma = new AlunoTurma();
 			alunoTurma.setId(a.getID());
 			alunoTurma.setNome(a.getNome());
+			alunoTurma.setUsuario(a.getLogin());
 			lista.add(alunoTurma);
 		}
 

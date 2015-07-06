@@ -19,7 +19,7 @@ public class PresencaDAO {
 
 	private static final String DB_SELECT_ALL_CHAMADAS = "select * from chamada where turma = ?";
 	private static final String DB_VERIFICA_ALUNO_PRESENTE = "select is_presente from chamada_aluno where aluno_id = (select id from usuario where usuario = ?)  and chamada_id = ?";
-	private static final String DB_GET_LISTA_ALUNO_TURMA = "select nome, id from usuario where id in (select aluno from turma_aluno where turma=?)";
+	private static final String DB_GET_LISTA_ALUNO_TURMA = "select nome, id, usuario from usuario where id in (select aluno from turma_aluno where turma=?)";
 
 	public List<Presenca> verificarPresencaTurma(String usuario, Integer turmaID) {
 		List<Presenca> listaPresenca = new ArrayList<Presenca>();
@@ -80,6 +80,7 @@ public class PresencaDAO {
 				aluno = new Aluno();
 				aluno.setNome(rs.getString("nome"));
 				aluno.setID(rs.getInt("id"));
+				aluno.setLogin(rs.getString("usuario"));
 				listaAluno.add(aluno);
 			}
 		} catch (SQLException e) {
