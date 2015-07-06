@@ -178,7 +178,7 @@ public class TestCasesAluno {
 			}
 		}
 		
-		//Viagem do João - H11
+		//H11
 		@Test
 		public void deslogarJaDeslogadoUsuarioInvalidoAluno() {
 

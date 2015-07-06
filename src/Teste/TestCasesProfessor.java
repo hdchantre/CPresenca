@@ -179,7 +179,7 @@ public class TestCasesProfessor {
 		}
 	}
 	
-	//Viagem do João - H14
+	//H14
 	@Test
 	public void deslogarJaDeslogadoUsuarioInvalidoProfessor() {
 
