@@ -126,6 +126,7 @@ public class AulaView {
 		if (chamada.getChamadaAberta()) {
 			iChamada.setInicializada(true);
 			iChamada.setChamadaID(chamada.getId());
+			iChamada.setTempoTicket(chamada.getTempoTicket());
 		} else {
 			iChamada.setInicializada(false);
 			iChamada.setCausaDoProblema("Chamada fechada");

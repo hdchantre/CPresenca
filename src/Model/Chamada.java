@@ -13,6 +13,15 @@ public class Chamada {
 	private Time fim;
 	private Map<Aluno, Boolean> alunos;
 	private Boolean chamadaAberta;
+	private Integer tempoTicket;
+
+	public Integer getTempoTicket() {
+		return tempoTicket;
+	}
+
+	public void setTempoTicket(Integer tempoTicket) {
+		this.tempoTicket = tempoTicket;
+	}
 
 	public Integer getId() {
 		return id;

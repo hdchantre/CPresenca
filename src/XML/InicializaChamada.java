@@ -10,7 +10,17 @@ public class InicializaChamada {
 	private String causaDoProblema;
 	private Integer chamadaID;
 	private Boolean isPresente;
+	private Integer tempoTicket;
 	
+	@XmlElement(name = "tempoTicket")
+	public Integer getTempoTicket() {
+		return tempoTicket;
+	}
+
+	public void setTempoTicket(Integer tempoTicket) {
+		this.tempoTicket = tempoTicket;
+	}
+
 	@XmlElement(name = "isPresente")
 	public Boolean getIsPresente() {
 		return isPresente;

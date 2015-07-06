@@ -42,7 +42,7 @@ public class AulaDAO {
 			float posix, float posiy, Integer porpre, Integer tempoTicket) {
 		Chamada chamada = new Chamada();
 		chamada.setChamadaAberta(false);
-
+		
 		String estado = commonDAO.isUsuarioLogado(nomeUsuario);
 		boolean isProfessor = commonDAO.isProfessor(nomeUsuario);
 
@@ -263,6 +263,7 @@ public class AulaDAO {
 				if (ps.executeUpdate() > 0) {
 					chamada.setChamadaAberta(true);
 					chamada.setId(rs.getInt("id"));
+					chamada.setTempoTicket(rs.getInt("tempo_ticket"));
 				}
 			}
 		} catch (SQLException e) {
