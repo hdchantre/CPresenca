@@ -32,7 +32,7 @@ public class AulaDAO {
 	private static final String DB_VERIFICA_ALUNO_EM_AULA = "select ca.id from chamada_aluno as ca, chamada as c where aluno_id = (select id from usuario where usuario = ?) and in_aula = true and ca.chamada_id = c.id and c.fim_aula = false";
 	private static final String DB_VERIFICA_ALUNO_PRESENTE = "select is_presente from chamada_aluno where aluno_id = (select id from usuario where usuario = ?)  and chamada_id = ?";
 	private static final String DB_SAIR_AULA = "update chamada_aluno set in_aula = false where aluno_id = (select id from usuario where usuario = ?)";
-	private static final String DB_MARCAR_PRESENCA_ALUNO = "update chamada_aluno set is_presente = ? where aluno_id = ?";
+	private static final String DB_MARCAR_PRESENCA_ALUNO = "update chamada_aluno set is_presente = ? where aluno_id = ? and chamada_id = ?";
 	private static final String DB_SALVAR_TICKET = "insert into ticket (aluno_id, chamada_id, posi_x, posi_y, data_ticket, hora_ticket) values ((select id from usuario where usuario = ?),?,?,?,?,?)";
 	private static final String DB_GET_TICKETS = "select t.*, u.nome, u.id as aid from ticket as t, usuario as u where chamada_id in (select id from chamada_aluno where chamada_id = ?) and t.aluno_id = u.id  order by aluno_id";
 	private static final String DB_GET_LISTA_ALUNO = "select t.*, u.nome from turma_aluno as t, usuario as u where turma=? and t.aluno = u.id  order by aluno";
@@ -374,6 +374,7 @@ public class AulaDAO {
 		Map<Aluno, Boolean> lista2 = new HashMap<Aluno, Boolean>();
 		Map<Integer, Integer> listaTicket = new HashMap<Integer, Integer>();
 		Date dataAula = new Date();
+		int idChamada = 0;
 
 		int porPresenca = 75;
 		int tempoTicket = 5;
@@ -421,6 +422,7 @@ public class AulaDAO {
 				ps = connection.prepareStatement(DB_GET_TICKETS);
 
 				ps.setInt(1, rs.getInt("id"));
+				idChamada = rs.getInt("id");
 				dataAula = rs.getDate("data_chamada");
 
 				ResultSet rs3 = ps.executeQuery();
@@ -444,6 +446,7 @@ public class AulaDAO {
 
 		for (Integer id : listaTicket.keySet()) {
 			aluno = new Aluno();
+			aluno.setIdChamada(idChamada);
 			aluno.setID(id);
 			aluno.setNome(lista.get(id));
 			if (listaTicket.get(id) == 0
@@ -473,6 +476,7 @@ public class AulaDAO {
 
 				ps.setBoolean(1, lista.get(aluno));
 				ps.setInt(2, aluno.getID());
+				ps.setInt(3, aluno.getIdChamada());
 
 				ps.executeUpdate();
 			}

@@ -7,6 +7,16 @@ public class Aluno extends Usuario {
 	private Date anoAdmissao;
 	private String curso;
 	private String tipoAluno;
+	private Integer idChamada;
+	
+
+	public Integer getIdChamada() {
+		return idChamada;
+	}
+
+	public void setIdChamada(Integer idChamada) {
+		this.idChamada = idChamada;
+	}
 
 	public Date getAnoAdmissao() {
 		return anoAdmissao;
